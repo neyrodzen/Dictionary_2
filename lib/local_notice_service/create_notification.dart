@@ -46,7 +46,7 @@ import '../setting_page/setting_page.dart';
         NotificationActionButton(
             key: 'next',
             label: '____next',
-            color: Color.fromARGB(255, 35, 22, 22),
+            color: const Color.fromARGB(255, 35, 22, 22),
             actionType: ActionType.SilentAction),
       ],
     );

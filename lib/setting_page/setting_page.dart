@@ -1,5 +1,8 @@
+
+
 import 'package:dictionary_with_not/local_notice_service/create_notification.dart';
 import 'package:flutter/material.dart';
+import 'package:notification_permissions/notification_permissions.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -12,12 +15,41 @@ int sec = 0;
 
 class _SettingsPageState extends State<SettingsPage> {
   TextEditingController textEditingController = TextEditingController();
-
   String textError = 'error';
   NotifiCreate notifiCreate = NotifiCreate();
   @override
   void initState() {
     super.initState();
+  }
+
+  void requestPermissions() async {
+    PermissionStatus permissionStatus = await
+    NotificationPermissions.getNotificationPermissionStatus();
+   
+    if (permissionStatus == PermissionStatus.granted || permissionStatus == PermissionStatus.unknown)  {
+      await notifiCreate.getWords();
+      notifiCreate.create();
+     }
+      else if (permissionStatus == PermissionStatus.denied) {
+        Future<PermissionStatus> Status = NotificationPermissions.requestNotificationPermissions( openSettings: true);
+       } 
+       
+  }
+
+  void onChange(String value) {
+    if (value != '') {
+      try {
+        sec = int.parse(value);
+      } catch (error) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(textError),
+              );
+            });
+      }
+    }
   }
 
   @override
@@ -50,9 +82,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   height: 30,
                 ),
                 const Center(
-                    child:  Text(
+                    child: Text(
                   'Настройка уведомлений',
-                  style:  TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
                   ),
@@ -67,35 +99,23 @@ class _SettingsPageState extends State<SettingsPage> {
                     SizedBox(
                       width: 60,
                       child: TextField(
-                        keyboardType: TextInputType.number,
-                        controller: textEditingController,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5))),
-                        onChanged: (value) {
-                          if (value != '') {
-                            try {
-                              sec = int.parse(value);
-                            } catch (error) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text(textError),
-                                    );
-                                  });
-                            }
-                          }
-                        },
-                      ),
+                          keyboardType: TextInputType.number,
+                          controller: textEditingController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                              
+                                  ),
+                                  ),
+                                  
+                          onChanged: onChange),
                     ),
                     // SizedBox(
                     //   width: 20,
                     // ),
                     ElevatedButton(
                       onPressed: () async {
-                        await notifiCreate.getWords();
-                        notifiCreate.create();
+                        requestPermissions();
                       },
                       child: const Text('Ok'),
                     ),

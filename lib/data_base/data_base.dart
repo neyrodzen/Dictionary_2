@@ -19,7 +19,9 @@ class DataBase {
   Future<bool> containsFavorite(String key) async {
     var boxFavorite = await Hive.openBox<String>('FavoriteBox');
     bool flag = boxFavorite.containsKey(key);
-    await boxFavorite.close();
+    if (key == ' ') {
+      await boxFavorite.close();
+    }
     return flag;
   }
 
@@ -100,7 +102,7 @@ class DataBase {
   Future<Map<String, String>> getNextWords() async {
     final boxLearn = await Hive.openBox<String>('FavoriteBox');
     final String key = boxLearn.keyAt(count) as String;
-    final String value = boxLearn.getAt(count)?? 'Список пуст';
+    final String value = boxLearn.getAt(count) ?? 'Список пуст';
     Map<String, String> map = {key: value};
     return map;
   }

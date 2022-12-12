@@ -29,28 +29,28 @@ class _SearchListState extends State<SearchList> {
 
   Future<void> onTapSearch() async {
     String enter = textcontroller.text;
-   // if (enter.isNotEmpty) {
-      SearchTextFieldModelProvider.read(context)?.model.key = enter;
-      text = await SearchTextFieldModelProvider.read(context)
-              ?.model
-              .getTranslate() ??
-          'error';
-      flag = await SearchTextFieldModelProvider.watch(context)
-              ?.model
-              .database
-              .containsFavorite(enter) ??
-          false;
-      flag == true
-          ? favoritButton = const Icon(
-              Icons.favorite,
-              color: Colors.red,
-            )
-          : favoritButton = const Icon(
-              Icons.favorite_border,
-              color: Colors.red,
-            );
-      setState(() {});
-  //  }
+    // if (enter.isNotEmpty) {
+    SearchTextFieldModelProvider.read(context)?.model.key = enter;
+    text = await SearchTextFieldModelProvider.read(context)
+            ?.model
+            .getTranslate() ??
+        'error';
+    flag = await SearchTextFieldModelProvider.watch(context)
+            ?.model
+            .database
+            .containsFavorite(enter) ??
+        false;
+    flag == true
+        ? favoritButton = const Icon(
+            Icons.favorite,
+            color: Colors.red,
+          )
+        : favoritButton = const Icon(
+            Icons.favorite_border,
+            color: Colors.red,
+          );
+    setState(() {});
+    //  }
   }
 
   Future<void> pressFavorit() async {
@@ -95,8 +95,8 @@ class _SearchListState extends State<SearchList> {
     return Column(
       children: [
         Column(
-          children: [
-            const SizedBox(
+          children: const [
+            SizedBox(
               height: 100,
             ),
           ],
@@ -122,6 +122,10 @@ class _SearchListState extends State<SearchList> {
                   const SizedBox(height: 20),
                   TextField(
                     controller: textcontroller,
+                    decoration: const InputDecoration(
+                      hintText: 'Введите текст',
+                      ),
+                      
                   ),
                   const SizedBox(height: 20),
                   Row(
