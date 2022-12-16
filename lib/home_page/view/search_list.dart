@@ -16,7 +16,7 @@ class _SearchListState extends State<SearchList> {
   TextEditingController textcontroller = TextEditingController();
   Widget favoritButton = const Icon(
     Icons.favorite_border,
-    color: Colors.red,
+    color: Colors.black,
   );
   bool flag = false;
   String text = ' ';
@@ -47,7 +47,7 @@ class _SearchListState extends State<SearchList> {
           )
         : favoritButton = const Icon(
             Icons.favorite_border,
-            color: Colors.red,
+            color: Colors.black,
           );
     setState(() {});
     //  }
@@ -85,66 +85,68 @@ class _SearchListState extends State<SearchList> {
           )
         : favoritButton = const Icon(
             Icons.favorite_border,
-            color: Colors.red,
+            color: Colors.black,
           );
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Column(
-          children: const [
-            SizedBox(
-              height: 100,
-            ),
-          ],
-        ),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: 350, maxWidth: 350),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
-                BoxShadow(
-                  offset: Offset(2, 2),
-                  blurRadius: 0.5,
-                ),
-              ],
-              color: const Color.fromARGB(255, 230, 230, 230),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  TextField(
-                    controller: textcontroller,
-                    decoration: const InputDecoration(
-                      hintText: 'Введите текст',
-                      ),
-                      
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Column(
+            children: const [
+              SizedBox(
+                height: 100,
+              ),
+            ],
+          ),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxHeight: 350, maxWidth: 350),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: const [
+                  BoxShadow(
+                    offset: Offset(2, 2),
+                    blurRadius: 0.5,
                   ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          text,
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      IconButton(onPressed: pressFavorit, icon: favoritButton)
-                    ],
-                  )
                 ],
+                color: const Color.fromARGB(255, 230, 230, 230),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20),
+                    TextField(
+                      controller: textcontroller,
+                      decoration: const InputDecoration(
+                        hintText: 'Введите текст',
+                        ),
+                        
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            text,
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        IconButton(onPressed: pressFavorit, icon: favoritButton)
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

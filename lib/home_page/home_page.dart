@@ -1,3 +1,4 @@
+import 'package:dictionary_with_not/home_page/view/favorite_list.dart';
 import 'package:dictionary_with_not/home_page/view/search_list.dart';
 import 'package:flutter/material.dart';
 
@@ -32,9 +33,12 @@ class _HomePageState extends State<HomePage> {
       ParentList list =
           ModelProvider.watch(context)?.model.factoryList() ?? ErrorList();
       if (index == 1) {
-        var listfavorit = await list.makeSome();
+        var listfavorit = await FavoritesList().makeSome();
         listWidget = listfavorit;
       } else if (index == 0) {
+        listWidget = list as Widget;
+      }
+        else if (index == 2) {
         listWidget = list as Widget;
       }
       setState(() {});
@@ -65,10 +69,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: ColoredBox(
           color: Colors.white70,
-          child: SingleChildScrollView(
-            child:
-                SearchTextFieldModelProvider(model: modelSearch, child: listWidget),
-          ),
+          child: SearchTextFieldModelProvider(model: modelSearch, child: listWidget),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -83,7 +84,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: 'List ',
+            label: 'Offline',
           ),
         ],
         backgroundColor: const Color.fromARGB(255, 108, 30, 244),

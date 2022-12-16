@@ -1,3 +1,4 @@
+import 'package:dictionary_with_not/home_page/view/dictionary_list.dart';
 import 'package:flutter/cupertino.dart';
 import '../view/favorite_list.dart';
 import '../view/search_list.dart';
@@ -20,7 +21,7 @@ class ModelOfPage extends ChangeNotifier {
         return FavoritesList();
       case 2:
         // notifyListeners();
-        return OfflineList();
+        return DictionaryList();
       default:
         // notifyListeners();
         return ErrorList();

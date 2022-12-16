@@ -1,8 +1,6 @@
-
-
+import 'package:permission_handler/permission_handler.dart';
 import 'package:dictionary_with_not/local_notice_service/create_notification.dart';
 import 'package:flutter/material.dart';
-import 'package:notification_permissions/notification_permissions.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -23,17 +21,17 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void requestPermissions() async {
-    PermissionStatus permissionStatus = await
-    NotificationPermissions.getNotificationPermissionStatus();
-   
-    if (permissionStatus == PermissionStatus.granted || permissionStatus == PermissionStatus.unknown)  {
+    PermissionStatus permissionStatus = await Permission.notification.status;
+
+    if (permissionStatus == PermissionStatus.granted) {
       await notifiCreate.getWords();
       notifiCreate.create();
-     }
-      else if (permissionStatus == PermissionStatus.denied) {
-        Future<PermissionStatus> Status = NotificationPermissions.requestNotificationPermissions( openSettings: true);
-       } 
-       
+    } else {
+      //  if (permissionStatus == PermissionStatus.denied  ||
+      //     permissionStatus == PermissionStatus.permanentlyDenied ||
+      //     permissionStatus == PermissionStatus.restricted){
+      openAppSettings();
+    }
   }
 
   void onChange(String value) {
@@ -95,19 +93,20 @@ class _SettingsPageState extends State<SettingsPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const Text('Введите интервал в минутах:'),
+                    const Text('Введите интервал в минутах:',
+                    style: const TextStyle(
+              fontSize: 16,
+             )),
                     SizedBox(
                       width: 60,
                       child: TextField(
                           keyboardType: TextInputType.number,
                           controller: textEditingController,
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                              
-                                  ),
-                                  ),
-                                  
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
                           onChanged: onChange),
                     ),
                     // SizedBox(

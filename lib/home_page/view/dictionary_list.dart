@@ -1,5 +1,8 @@
+import 'package:dictionary_with_not/home_page/view/dict_list_item.dart';
 import 'package:flutter/material.dart';
 import 'parent_list.dart';
+import 'package:dictionary_with_not/word_list.dart' as word;
+
 
 class DictionaryList extends StatefulWidget implements ParentList {
   @override
@@ -14,6 +17,10 @@ class DictionaryList extends StatefulWidget implements ParentList {
 class DictionaryListState extends State<DictionaryList> {
   @override
   Widget build(BuildContext context) {
-    return const Text('data');
+    return ListView.builder(
+      itemCount: word.list.length,
+      itemBuilder: (_, int index) {
+      return DictionaryListItem(index);
+    });
   }
 }

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 import 'package:hive/hive.dart';
 
 class DataBase {
@@ -25,40 +25,13 @@ class DataBase {
     return flag;
   }
 
-  Future<List<Widget>> getListFavorite() async {
+  Future<Map<dynamic,String>> getListFavorite() async {
+
     var boxFavorite = await Hive.openBox<String>('FavoriteBox');
     var map = boxFavorite.toMap();
-    var list = <Widget>[];
-    map.forEach((key, value) {
-      list.add(Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(),
-              ),
-              Expanded(
-                flex: 4,
-                child: Text(
-                  '$key',
-                  style: const TextStyle(fontSize: 20),
-                ),
-              ),
-              Expanded(
-                flex: 4,
-                child: Text(value, style: const TextStyle(fontSize: 20)),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          )
-        ],
-      ));
-    });
+   
     await boxFavorite.close();
-    return list;
+    return map ;
   }
 
   Future<void> putLearn(String key, String value) async {
