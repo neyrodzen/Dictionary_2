@@ -27,9 +27,6 @@ class _SettingsPageState extends State<SettingsPage> {
       await notifiCreate.getWords();
       notifiCreate.create();
     } else {
-      //  if (permissionStatus == PermissionStatus.denied  ||
-      //     permissionStatus == PermissionStatus.permanentlyDenied ||
-      //     permissionStatus == PermissionStatus.restricted){
       openAppSettings();
     }
   }
@@ -94,7 +91,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const Text('Введите интервал в минутах:',
-                    style: const TextStyle(
+                    style:  TextStyle(
               fontSize: 16,
              )),
                     SizedBox(

@@ -11,9 +11,6 @@ import '../setting_page/setting_page.dart';
    void create() {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
-        // This is just a basic example. For real apps, you must show some
-        // friendly dialog box before call the request method.
-        // This is very important to not harm the user experience
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
@@ -28,7 +25,7 @@ import '../setting_page/setting_page.dart';
           wakeUpScreen: false,
           category: NotificationCategory.Message),
       schedule: NotificationInterval(
-        interval: sec,
+        interval: sec*60,
         preciseAlarm: true,
       ),
       actionButtons: [
