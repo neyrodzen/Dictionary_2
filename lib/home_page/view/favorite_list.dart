@@ -32,7 +32,7 @@ class FavoritesList extends StatelessWidget implements ParentList {
           delete('$key');
         },
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.
           children: [
             Row(
               children: [
