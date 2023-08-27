@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../data_base/data_base.dart';
-import 'favorite_button.dart';
 import 'parent_list.dart';
 
 class FavoritesList extends StatelessWidget implements ParentList {
+  
+     FavoritesList ({Key? key}) : super(key: key);
   final DataBase dataBase = DataBase();
 
   Future<void> delete(String key) async {
@@ -23,7 +24,7 @@ class FavoritesList extends StatelessWidget implements ParentList {
 
     map.forEach((key, value) async {
       list.add(Dismissible(
-        background: Container(
+           background: Container(
           color: Colors.red,
           child: const Icon(Icons.delete),
         ),
@@ -32,10 +33,11 @@ class FavoritesList extends StatelessWidget implements ParentList {
           delete('$key');
         },
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.
+          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
+            const SizedBox(height: 50,),
                 Expanded(
                   flex: 1,
                   child: Container(),

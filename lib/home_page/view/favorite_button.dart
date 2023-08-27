@@ -1,5 +1,7 @@
-import 'package:dictionary_with_not/data_base/data_base.dart';
+
 import 'package:flutter/material.dart';
+
+import '../../data_base/data_base.dart';
 
 class FavoriteButton extends StatefulWidget {
   const FavoriteButton(this.text,this.translate, {super.key});
@@ -14,7 +16,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
 
   Icon favoiteIcon = const Icon(
     Icons.favorite,
-    color: Colors.red,
+    color: Color.fromARGB(100, 244, 67, 54),
   );
   void onPressed() {
     if (favoiteIcon.color == Colors.red) {
@@ -23,7 +25,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     } else {
       favoiteIcon = const Icon(
         Icons.favorite,
-        color: Colors.red,
+        color: Color.fromARGB(100, 244, 67, 54),
       );
        dataBase.putFavorite(widget.text, widget.translate);
     }

@@ -1,10 +1,12 @@
-import 'package:dictionary_with_not/home_page/view/dict_list_item.dart';
+
 import 'package:flutter/material.dart';
+import 'dict_list_item.dart';
 import 'parent_list.dart';
-import 'package:dictionary_with_not/word_list.dart' as word;
+import 'package:push_word/word_list.dart'as word;
 
 
 class DictionaryList extends StatefulWidget implements ParentList {
+   const DictionaryList ({Key? key}) : super(key: key);
   @override
   State<DictionaryList> createState() => DictionaryListState();
 

@@ -1,4 +1,5 @@
 
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 import 'home_page/home_page.dart';
@@ -38,24 +39,35 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: MyApp.navigatorKey,
+
+    return AdaptiveTheme(
+      light: ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: Colors.blue,
+      ),
+      dark: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.grey,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 65, 61, 61)
+      ),
+      initial: AdaptiveThemeMode.light,
+      builder: (theme, darkTheme) => MaterialApp(
     
+        theme: theme,
+        darkTheme: darkTheme,
+       
+      navigatorKey: MyApp.navigatorKey,
       title: MyApp.name,
-      color: MyApp.mainColor,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          colorScheme: const ColorScheme.light(
-        onPrimary: Colors.white70,
-      )),
-      home: ModelProvider(
-        model: model,
-       child: const HomePage()),
+      home: ModelProvider(model: model, child: const HomePage()),
       routes: {
         //'/': (context) => HomePage(),
         '/settings_page': (context) => const SettingsPage()
       },
       // initialRoute: '/'
+    
+      ),
     );
+
   }
 }

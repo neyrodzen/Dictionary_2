@@ -1,6 +1,6 @@
-import 'package:dictionary_with_not/home_page/view/offline_button.dart';
+import 'package:push_word/home_page/view/offline_button.dart';
 import 'package:flutter/material.dart';
-import 'package:dictionary_with_not/word_list.dart' as word;
+import 'package:push_word/word_list.dart' as word;
 
 class DictionaryListItem extends StatelessWidget {
   const DictionaryListItem(this.index, {super.key});
@@ -14,22 +14,29 @@ class DictionaryListItem extends StatelessWidget {
           Row(
             children: [
               const SizedBox(
-                width: 8,
-                height: 40,
+                height: 50,
               ),
               Expanded(
+                  flex: 1,
+                  child: Container(),
+                ),
+              Expanded(
+                  flex: 4,
                 child: Text(
                   word.list[index]['ru'] as String,
                   style: const TextStyle(
                     fontSize: 20,
                   ),
                 ),
+
               ),
               const Expanded(
+                  flex: 1,
                   child: SizedBox(
                 width: 20,
               )),
               Expanded(
+                  flex: 4,
                 child: Text(word.list[index]['en'] as String,
                     style: const TextStyle(
                       fontSize: 20,
@@ -43,12 +50,11 @@ class DictionaryListItem extends StatelessWidget {
           ),
           const Divider(
             color: Colors.black,
-            thickness: 1,
-            endIndent: 8,
+               thickness: 1,
+              indent: 10,
+              endIndent: 10,
           ),
-          const SizedBox(
-            height: 5,
-          )
+          
         ],
       ),
     );

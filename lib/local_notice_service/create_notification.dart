@@ -1,7 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:dictionary_with_not/data_base/data_base.dart';
 import 'package:flutter/material.dart';
 
+import '../data_base/data_base.dart';
 import '../setting_page/setting_page.dart';
 
  class NotifiCreate {
@@ -31,18 +31,18 @@ import '../setting_page/setting_page.dart';
       actionButtons: [
         NotificationActionButton(
             key: 'repeat',
-            label: 'repeat____',
-            color: Colors.amber,
+            label: 'repeat',
+            color: const Color.fromARGB(255, 25, 95, 39),
             actionType: ActionType.SilentAction),
         NotificationActionButton(
           key: 'cancel',
-          label: '____cancel____ ',
+          label: 'cancel',
           color: Colors.red,
           actionType: ActionType.DisabledAction,
         ),
         NotificationActionButton(
             key: 'next',
-            label: '____next',
+            label: 'next',
             color: const Color.fromARGB(255, 35, 22, 22),
             actionType: ActionType.SilentAction),
       ],

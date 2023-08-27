@@ -11,7 +11,10 @@ class SearchTextFieldModel extends ChangeNotifier {
   Future<String> getTranslate() async {
     ApiClient apiClient = ApiClient();
     String translate = await apiClient.getHttp(key) ?? key;
-    return translate.isNotEmpty ? translate : key;
+    if (key.length < 2) {
+      translate = ' ';
+    }
+    return translate;
   }
 
   @override

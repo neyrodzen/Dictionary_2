@@ -1,5 +1,6 @@
-import 'package:dictionary_with_not/home_page/view/favorite_list.dart';
-import 'package:dictionary_with_not/home_page/view/search_list.dart';
+
+import 'package:push_word/home_page/view/favorite_list.dart';
+import 'package:push_word/home_page/view/search_list.dart';
 import 'package:flutter/material.dart';
 
 import 'model/model_page_provider.dart';
@@ -15,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int indexItem = 0;
-  Widget listWidget = SearchList();
+  Widget listWidget = const SearchList();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage> {
       indexItem = index;
       ModelProvider.watch(context)?.model.indexBottomBar = index;
       ParentList list =
-          ModelProvider.watch(context)?.model.factoryList() ?? ErrorList();
+          ModelProvider.watch(context)?.model.factoryList() ?? const ErrorList();
       if (index == 1) {
         var listfavorit = await FavoritesList().makeSome();
         listWidget = listfavorit;
@@ -53,8 +54,8 @@ class _HomePageState extends State<HomePage> {
               child: const Icon(Icons.settings),
             )
           ],
-          title: Row(
-            children: const [
+          title: const Row(
+            children:  [
               Expanded(
                 child: Text(
                   '   ',
@@ -68,11 +69,12 @@ class _HomePageState extends State<HomePage> {
           minWidth: double.infinity,
         ),
         child: ColoredBox(
-          color: Colors.white70,
+          color: Theme.of(context).brightness == Brightness.light ? Colors.white : Theme.of(context).primaryColor,
           child: SearchTextFieldModelProvider(model: modelSearch, child: listWidget),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).primaryColor,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
@@ -87,8 +89,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Offline',
           ),
         ],
-        backgroundColor: const Color.fromARGB(255, 108, 30, 244),
-        selectedItemColor: Colors.white70,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white38,
         onTap: onTapBottom,
         currentIndex: indexItem,
       ),

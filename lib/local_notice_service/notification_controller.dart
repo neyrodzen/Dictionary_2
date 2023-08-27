@@ -1,7 +1,8 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:dictionary_with_not/local_notice_service/create_notification.dart';
-import 'package:dictionary_with_not/data_base/data_base.dart';
+
+import '../data_base/data_base.dart';
+import 'create_notification.dart';
 
  class  NotificationController {
 

@@ -1,5 +1,7 @@
-import 'package:dictionary_with_not/data_base/data_base.dart';
+
 import 'package:flutter/material.dart';
+
+import '../../data_base/data_base.dart';
 
 class OfflineListButton extends StatefulWidget {
   const OfflineListButton(this.text, this.translate, {super.key});
@@ -27,28 +29,28 @@ class _OfflineListButtonState extends State<OfflineListButton> {
     if (flag == true) {
       favoriteIcon = const Icon(
         Icons.favorite,
-        color: Colors.red,
+        color: Color.fromARGB(165, 244, 67, 54),
       );
     } else {
       favoriteIcon = const Icon(
         Icons.favorite_border,
-        color: Colors.black,
+        color: Color.fromARGB(165, 244, 67, 54),
       );
     }
     return flag;
   }
 
  Future<void> onPressed() async {
-    if (favoriteIcon.color == Colors.red) {
+    if (favoriteIcon.icon == Icons.favorite) {
       favoriteIcon = const Icon(
         Icons.favorite_border,
-        color: Colors.black,
+        color: Color.fromARGB(165, 244, 67, 54),
       );
      await  dataBase.deleteFavorite(widget.text);
     } else {
       favoriteIcon = const Icon(
         Icons.favorite,
-        color: Colors.red,
+        color: Color.fromARGB(165, 244, 67, 54),
       );
      await dataBase.putFavorite(widget.text, widget.translate);
     }
@@ -63,9 +65,9 @@ class _OfflineListButtonState extends State<OfflineListButton> {
         if (snapshot.hasData) {
           return IconButton(onPressed: onPressed, icon: favoriteIcon);
         } else if (snapshot.hasError) {
-          return const Text('err');
-        } else {
           return const Text('Error');
+        } else {
+          return const CircularProgressIndicator();
         }
       },
     );

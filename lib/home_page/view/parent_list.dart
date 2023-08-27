@@ -5,6 +5,8 @@ abstract class ParentList {
 }
 
 class OfflineList extends StatelessWidget implements ParentList {
+  
+    const OfflineList ({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return const Text('List');
@@ -17,6 +19,7 @@ class OfflineList extends StatelessWidget implements ParentList {
 }
 
 class ErrorList extends StatelessWidget implements ParentList {
+    const ErrorList ({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return const Text('Error ');
