@@ -89,7 +89,7 @@ List<Map<String, dynamic>> list = [
   {"id": 153, "en": "donkey", "ru": "осел", "tr": "[ 'dɔnki ]"},
   {"id": 154, "en": "mosquito", "ru": "комар", "tr": "[ məs'ki:təu ]"},
   {"id": 155, "en": "tiger", "ru": "тигр", "tr": "[ 'taigə ]"},
-  {"id": 156, "en": "turtle", "ru": "черепаха (TR!)", "tr": "[ 'tə:tl ]"},
+  {"id": 156, "en": "turtle", "ru": "черепаха ", "tr": "[ 'tə:tl ]"},
   {"id": 157, "en": "monkey", "ru": "обезьяна", "tr": "[ 'mʌŋki ]"},
   {"id": 158, "en": "fox", "ru": "лиса", "tr": "[ fɔks ]"},
   {"id": 159, "en": "squirrel", "ru": "белка", "tr": "[ 'skwir(ə)l ]"},
@@ -97,7 +97,7 @@ List<Map<String, dynamic>> list = [
   {
     "id": 161,
     "en": "worm",
-    "ru": "червь, глист, ничтожество (перен.)",
+    "ru": "червь, глист, ничтожество",
     "tr": "[ wə:m ]"
   },
   {"id": 162, "en": "spider", "ru": "паук", "tr": "[ 'spaidə ]"},
@@ -115,7 +115,6 @@ List<Map<String, dynamic>> list = [
   {"id": 169, "en": "apple", "ru": "яблоко", "tr": "[ æpl ]"},
   {"id": 170, "en": "apricot", "ru": "абрикос", "tr": "[ 'eiprikɔt ]"},
   {"id": 171, "en": "carrot", "ru": "морковь", "tr": "[ 'kærət ]"},
-  {"id": 172, "en": "fig", "ru": "рис. (TR!)", "tr": "[ fig ]"},
   {"id": 173, "en": "garlic", "ru": "чеснок", "tr": "[ gɑ:lik ]"},
   {"id": 174, "en": "onion", "ru": "лук", "tr": "[ 'ʌnjən ]"},
   {"id": 175, "en": "orange", "ru": "апельсин, оранжевый", "tr": "[ 'ɔrinʤ ]"},
@@ -126,7 +125,7 @@ List<Map<String, dynamic>> list = [
   {
     "id": 180,
     "en": "tangerine",
-    "ru": "мандарин (плод)",
+    "ru": "мандарин",
     "tr": "[ ,tænʤə'ri:n ]"
   },
   {"id": 181, "en": "lemon", "ru": "лимон", "tr": "[ 'lemən ]"},
@@ -194,10 +193,10 @@ List<Map<String, dynamic>> list = [
   {"id": 233, "en": "grater", "ru": "терка", "tr": "[ 'greitə ]"},
   {"id": 234, "en": "briefcase", "ru": "портфель", "tr": "[ 'bri:f‚keɪs ]"},
   {"id": 235, "en": "strawberries", "ru": "клубника", "tr": "[ 'strɔ:bəriz ]"},
-  {"id": 236, "en": "cherries", "ru": "вишни (от cherry)", "tr": "[ 'ʧeriz ]"},
+  {"id": 236, "en": "cherries", "ru": "вишни", "tr": "[ 'ʧeriz ]"},
   {"id": 237, "en": "dates", "ru": "даты (от date)", "tr": "[ deits ]"},
   {"id": 238, "en": "braces", "ru": "подтяжки", "tr": "[ 'breɪsɪz ]"},
-  {"id": 239, "en": "gloves", "ru": "перчатки (от glove)", "tr": "[ glʌvz ]"},
+  {"id": 239, "en": "gloves", "ru": "перчатки", "tr": "[ glʌvz ]"},
   {"id": 240, "en": "pyjamas", "ru": "пижама", "tr": "[ pə'ʤɑ:məz ]"},
   {"id": 241, "en": "cricket", "ru": "крикет (спорт.)", "tr": "[ 'krikit ]"},
   {"id": 242, "en": "beetroot", "ru": "красная свекла", "tr": "[ 'bi:tru:t ]"},
@@ -275,7 +274,7 @@ List<Map<String, dynamic>> list = [
   {
     "id": 269,
     "en": "tenderness",
-    "ru": "нежность (!NEW!)",
+    "ru": "нежность",
     "tr": "[ 'tendənis ]"
   },
   {"id": 270, "en": "blue", "ru": "синий", "tr": "[ blu: ]"},
@@ -364,7 +363,7 @@ List<Map<String, dynamic>> list = [
   {
     "id": 318,
     "en": "seaweed",
-    "ru": "морская водоросль (TR!)",
+    "ru": "морская водоросль",
     "tr": "[ 'si:wi:d ]"
   },
   {"id": 319, "en": "shell", "ru": "раковина, скорлупа", "tr": "[ ʃel ]"},
@@ -378,7 +377,7 @@ List<Map<String, dynamic>> list = [
   },
   {"id": 323, "en": "pail", "ru": "ведро", "tr": "[ peil ]"},
   {"id": 324, "en": "swimmer", "ru": "пловец", "tr": "[ 'swimə ]"},
-  {"id": 325, "en": "tube", "ru": "труба (не pipe)", "tr": "[ tju:b ]"},
+  {"id": 325, "en": "tube", "ru": "труба ", "tr": "[ tju:b ]"},
   {"id": 326, "en": "mask", "ru": "маска", "tr": "[ mɑ:sk ]"},
   {"id": 327, "en": "TV", "ru": "телевизор, телевидение", "tr": "[ ‚ti:'vi: ]"},
   {"id": 328, "en": "speaker", "ru": "оратор", "tr": "[ 'spi:kə ]"},
@@ -393,14 +392,14 @@ List<Map<String, dynamic>> list = [
   {"id": 332, "en": "microphone", "ru": "микрофон", "tr": "[ 'maikrəfəun ]"},
   {"id": 333, "en": "gardening", "ru": "садоводство", "tr": "[ 'gɑ:dniŋ ]"},
   {"id": 334, "en": "reading", "ru": "чтение", "tr": "[ 'ri:diŋ ]"},
-  {"id": 335, "en": "singing", "ru": "пение (TR!)", "tr": "[ 'siŋiŋ ]"},
+  {"id": 335, "en": "singing", "ru": "пение", "tr": "[ 'siŋiŋ ]"},
   {"id": 336, "en": "ceiling", "ru": "потолок", "tr": "[ 'si:liŋ ]"},
   {"id": 337, "en": "wall", "ru": "стена", "tr": "[ wɔ:l ]"},
   {"id": 338, "en": "painting", "ru": "живопись", "tr": "[ 'peintiŋ ]"},
   {"id": 339, "en": "vase", "ru": "ваза", "tr": "[ vɑ:z ]"},
-  {"id": 340, "en": "fireplace", "ru": "камин (TR!)", "tr": "[ 'faɪər‚pleɪs ]"},
+  {"id": 340, "en": "fireplace", "ru": "камин", "tr": "[ 'faɪər‚pleɪs ]"},
   {"id": 341, "en": "staircase", "ru": "лестница", "tr": "[ 'stɛəkeis ]"},
-  {"id": 342, "en": "step", "ru": "шаг, шагать (step)", "tr": "[ step ]"},
+  {"id": 342, "en": "step", "ru": "шаг, шагать", "tr": "[ step ]"},
   {"id": 343, "en": "desk", "ru": "письменный стол", "tr": "[ desk ]"},
   {"id": 344, "en": "carpet", "ru": "ковер, устилать", "tr": "[ 'kɑ:pit ]"},
   {"id": 345, "en": "chair", "ru": "стул", "tr": "[ ʧɛə ]"},
@@ -455,14 +454,14 @@ List<Map<String, dynamic>> list = [
   {"id": 384, "en": "village", "ru": "деревня", "tr": "[ 'viliʤ ]"},
   {"id": 385, "en": "bridge", "ru": "мост", "tr": "[ briʤ ]"},
   {"id": 386, "en": "orchard", "ru": "фруктовый сад", "tr": "[ 'ɔ:ʧəd ]"},
-  {"id": 387, "en": "pond", "ru": "пруд (не pool)", "tr": "[ pɔnd ]"},
+  {"id": 387, "en": "pond", "ru": "пруд", "tr": "[ pɔnd ]"},
   {"id": 388, "en": "stable", "ru": "конюшня", "tr": "[ 'steibl ]"},
   {"id": 389, "en": "hay", "ru": "сено", "tr": "[ hei ]"},
   {"id": 390, "en": "field", "ru": "поле", "tr": "[ fi:ld ]"},
   {"id": 391, "en": "fence", "ru": "забор", "tr": "[ fens ]"},
   {"id": 392, "en": "barn", "ru": "амбар", "tr": "[ bɑ:n ]"},
   {"id": 393, "en": "tent", "ru": "палатка", "tr": "[ tent ]"},
-  {"id": 394, "en": "blocks", "ru": "кварталы (от block)", "tr": "[ blɔks ]"},
+  {"id": 394, "en": "blocks", "ru": "кварталы", "tr": "[ blɔks ]"},
   {
     "id": 395,
     "en": "puzzle",
@@ -475,7 +474,7 @@ List<Map<String, dynamic>> list = [
   {
     "id": 399,
     "en": "violet",
-    "ru": "фиолетовый (не purple)",
+    "ru": "фиолетовый",
     "tr": "[ 'vaiələt ]"
   },
   {
@@ -517,8 +516,8 @@ List<Map<String, dynamic>> list = [
   {"id": 411, "en": "scissors", "ru": "ножницы", "tr": "[ 'sizəz ]"},
   {"id": 412, "en": "powder", "ru": "пудра", "tr": "[ 'paudə ]"},
   {"id": 413, "en": "perfume", "ru": "духи", "tr": "[ 'pə:fju:m ]"},
-  {"id": 414, "en": "pike", "ru": "щука (не lung)", "tr": "[ paik ]"},
-  {"id": 415, "en": "fry", "ru": "(за)жарить", "tr": "[ frai ]"},
+  {"id": 414, "en": "pike", "ru": "щука", "tr": "[ paik ]"},
+  {"id": 415, "en": "fry", "ru": "жарить", "tr": "[ frai ]"},
   {"id": 416, "en": "smelt", "ru": "плавить", "tr": "[ smelt ]"},
   {"id": 417, "en": "salmon", "ru": "лосось", "tr": "[ 'sæmən ]"},
   {"id": 418, "en": "trout", "ru": "форель", "tr": "[ traut ]"},
@@ -599,16 +598,16 @@ List<Map<String, dynamic>> list = [
   {
     "id": 463,
     "en": "walk",
-    "ru": "гулять, ходить пешком (не hike)",
+    "ru": "гулять, ходить пешком",
     "tr": "[ wɔ:k ]"
   },
-  {"id": 464, "en": "close", "ru": "закрывать(ся)", "tr": "[ kləus ]"},
+  {"id": 464, "en": "close", "ru": "закрывать", "tr": "[ kləus ]"},
   {"id": 465, "en": "cough", "ru": "кашель", "tr": "[ kɔf ]"},
-  {"id": 466, "en": "crawl", "ru": "ползать (не creep)", "tr": "[ krɔ:l ]"},
+  {"id": 466, "en": "crawl", "ru": "ползать", "tr": "[ krɔ:l ]"},
   {"id": 467, "en": "cry", "ru": "кричать, восклицать", "tr": "[ krai ]"},
   {"id": 468, "en": "dance", "ru": "танцевать", "tr": "[ dɑ:ns ]"},
   {"id": 469, "en": "jump", "ru": "прыгать", "tr": "[ ʤʌmp ]"},
-  {"id": 470, "en": "hop", "ru": "хмель (бот.)", "tr": "[ hɔp ]"},
+  {"id": 470, "en": "hop", "ru": "хмель", "tr": "[ hɔp ]"},
   {"id": 471, "en": "fall", "ru": "падать", "tr": "[ fɔ:l ]"},
   {"id": 472, "en": "drop", "ru": "капля, падать, ронять", "tr": "[ drɔp ]"},
   {"id": 473, "en": "draw", "ru": "рисовать", "tr": "[ drɔ: ]"},
@@ -623,7 +622,7 @@ List<Map<String, dynamic>> list = [
   {
     "id": 477,
     "en": "scream",
-    "ru": "вскрикнуть, зареветь, визг, вопль (не shriek)",
+    "ru": "вскрикнуть, зареветь, визг, вопль ",
     "tr": "[ skri:m ]"
   },
   {"id": 478, "en": "smile", "ru": "улыбаться, улыбка", "tr": "[ smail ]"},
@@ -632,7 +631,7 @@ List<Map<String, dynamic>> list = [
   {
     "id": 481,
     "en": "shake",
-    "ru": "пожать (руки), дрожать, трясти",
+    "ru": "пожать, дрожать, трясти",
     "tr": "[ ʃeik ]"
   },
   {"id": 482, "en": "whisper", "ru": "шепот, шептать", "tr": "[ 'wispə ]"},
@@ -642,7 +641,7 @@ List<Map<String, dynamic>> list = [
   {
     "id": 486,
     "en": "bug",
-    "ru": "клоп, насекомое, жук (амер.)",
+    "ru": "клоп, насекомое, жук",
     "tr": "[ bʌg ]"
   },
   {"id": 487, "en": "herring", "ru": "сельдь", "tr": "[ 'heriŋ ]"},
@@ -717,7 +716,7 @@ List<Map<String, dynamic>> list = [
   {
     "id": 531,
     "en": "clamp",
-    "ru": "складывать, скреплять (не brace)",
+    "ru": "складывать, скреплять",
     "tr": "[ klæmp ]"
   },
   {"id": 532, "en": "wood", "ru": "лес, древесина, дрова", "tr": "[ wud ]"},
@@ -727,17 +726,17 @@ List<Map<String, dynamic>> list = [
     "ru": "выход, выходное отверстие",
     "tr": "[ 'autlet ]"
   },
-  {"id": 534, "en": "saw", "ru": "видел, смотрел (от see)", "tr": "[ sɔ: ]"},
+  {"id": 534, "en": "saw", "ru": "видел, смотрел", "tr": "[ sɔ: ]"},
   {
     "id": 535,
     "en": "brace",
-    "ru": "связывать, скреплять (не clamp)",
+    "ru": "связывать, скреплять",
     "tr": "[ breis ]"
   },
   {"id": 536, "en": "mallet", "ru": "деревянный молоток", "tr": "[ 'mælit ]"},
   {"id": 537, "en": "hammer", "ru": "молоток", "tr": "[ 'hæmə ]"},
   {"id": 538, "en": "hook", "ru": "крючок", "tr": "[ huk ]"},
-  {"id": 539, "en": "hatchet", "ru": "топор(ик)", "tr": "[ 'hæʧit ]"},
+  {"id": 539, "en": "hatchet", "ru": "топор", "tr": "[ 'hæʧit ]"},
   {
     "id": 540,
     "en": "chisel",
@@ -794,10 +793,10 @@ List<Map<String, dynamic>> list = [
   {
     "id": 568,
     "en": "gum",
-    "ru": "смола, клей; склеивать(ся) (не tar)",
+    "ru": "смола, клей; склеивать",
     "tr": "[ gʌm ]"
   },
-  {"id": 569, "en": "thumb", "ru": "большой палец (руки)", "tr": "[ θʌm ]"},
+  {"id": 569, "en": "thumb", "ru": "большой палец", "tr": "[ θʌm ]"},
   {
     "id": 570,
     "en": "index",
@@ -835,10 +834,10 @@ List<Map<String, dynamic>> list = [
   {"id": 584, "en": "slim", "ru": "стройный", "tr": "[ slim ]"},
   {"id": 585, "en": "thin", "ru": "тонкий, худощавый", "tr": "[ θin ]"},
   {"id": 586, "en": "fat", "ru": "жирный", "tr": "[ fæt ]"},
-  {"id": 587, "en": "bold", "ru": "смелый (не dare)", "tr": "[ bəuld ]"},
+  {"id": 587, "en": "bold", "ru": "смелый", "tr": "[ bəuld ]"},
   {"id": 588, "en": "moustache", "ru": "усы", "tr": "[ məs'tɑ:ʃ ]"},
   {"id": 589, "en": "handsome", "ru": "красивый", "tr": "[ 'hændsəm ]"},
-  {"id": 590, "en": "swift", "ru": "быстрый (не speed)", "tr": "[ swift ]"},
+  {"id": 590, "en": "swift", "ru": "быстрый", "tr": "[ swift ]"},
   {
     "id": 591,
     "en": "fracture",
@@ -847,7 +846,7 @@ List<Map<String, dynamic>> list = [
   },
   {"id": 592, "en": "cold", "ru": "холод, холодный", "tr": "[ kəuld ]"},
   {"id": 593, "en": "sneeze", "ru": "чихать, чиханье", "tr": "[ sni:z ]"},
-  {"id": 594, "en": "toes", "ru": "пальцы ноги(носки) (TR!)", "tr": "[ tu:z ]"},
+  {"id": 594, "en": "toes", "ru": "пальцы ноги", "tr": "[ tu:z ]"},
   {
     "id": 595,
     "en": "stuff",
@@ -858,7 +857,7 @@ List<Map<String, dynamic>> list = [
   {
     "id": 597,
     "en": "box",
-    "ru": "ящик, коробка, ложа (театр.)",
+    "ru": "ящик, коробка, ложа",
     "tr": "[ bɔks ]"
   },
   {"id": 598, "en": "fine", "ru": "прекрасно, прекрасный", "tr": "[ fain ]"},
@@ -868,7 +867,7 @@ List<Map<String, dynamic>> list = [
   {
     "id": 602,
     "en": "mulberry",
-    "ru": "тутовое дерево (TR!)",
+    "ru": "тутовое дерево",
     "tr": "[ 'mʌlbəri ]"
   },
   {"id": 603, "en": "acacia", "ru": "акация", "tr": "[ ə'keɪʃə ]"},
@@ -902,11 +901,11 @@ List<Map<String, dynamic>> list = [
   {"id": 616, "en": "suitcase", "ru": "чемодан", "tr": "[ 's(j)u:tkeis ]"},
   {"id": 617, "en": "baggage", "ru": "багаж", "tr": "[ 'bægiʤ ]"},
   {"id": 618, "en": "cabin", "ru": "каюта", "tr": "[ 'kæbin ]"},
-  {"id": 619, "en": "update", "ru": "модернизация (TR!)", "tr": "[ ʌp'deɪt ]"},
+  {"id": 619, "en": "update", "ru": "модернизация", "tr": "[ ʌp'deɪt ]"},
   {
     "id": 620,
     "en": "updated",
-    "ru": "обновленный (TR!)",
+    "ru": "обновленный ",
     "tr": "[ ʌp'deɪtɪd ]"
   },
   {
@@ -962,7 +961,7 @@ List<Map<String, dynamic>> list = [
   {"id": 636, "en": "dump", "ru": "разгружать", "tr": "[ dʌmp ]"},
   {"id": 637, "en": "strange", "ru": "странный", "tr": "[ streinʤ ]"},
   {"id": 638, "en": "foreign", "ru": "иностранный", "tr": "[ 'fɔrin ]"},
-  {"id": 639, "en": "huge", "ru": "огромный (не bulk)", "tr": "[ hju:ʤ ]"},
+  {"id": 639, "en": "huge", "ru": "огромный", "tr": "[ hju:ʤ ]"},
   {"id": 640, "en": "build", "ru": "строить", "tr": "[ bild ]"},
   {"id": 641, "en": "whale", "ru": "кит", "tr": "[ weil ]"},
   {"id": 642, "en": "walrus", "ru": "морж", "tr": "[ 'wɔ:lrəs ]"},
@@ -978,7 +977,7 @@ List<Map<String, dynamic>> list = [
   {
     "id": 652,
     "en": "kid",
-    "ru": "ребенок (разг.), обманывать (сленг.)",
+    "ru": "ребенок",
     "tr": "[ kid ]"
   },
   {"id": 653, "en": "secretary", "ru": "секретарь", "tr": "[ 'sekritəri ]"},

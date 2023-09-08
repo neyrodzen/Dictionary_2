@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 class DataBase {
   bool isFavorit = false;
   static int count = 0;
+  
   Future<void> putFavorite(String key, String value) async {
     var boxFavorite = await Hive.openBox<String>('FavoriteBox');
     await boxFavorite.put(key, value);
@@ -53,18 +54,13 @@ class DataBase {
     return flag;
   }
 
-  Future<Map<String, String>> getListLearn(int index) async {
+  Future<Map<dynamic, String>> getListLearn() async {
     final boxLearn = await Hive.openBox<String>('LearnBox');
-    final key = boxLearn.keyAt(index);
-    final value = boxLearn.getAt(index);
-    final Map<String, String> map;
-    if (key != null) {
-      map = {'$key': '$value'};
-    } else {
-      map = {' ': ' '};
-    }
+    var map = boxLearn.toMap();
+   
     await boxLearn.close();
-    return map;
+    return map ;
+   
   }
 
   Future<int> getLenghtLearnBox() async {

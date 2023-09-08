@@ -22,7 +22,7 @@ class ErrorList extends StatelessWidget implements ParentList {
     const ErrorList ({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const Text('Error ');
+    return const Text('Ошибка ');
   }
   
   @override

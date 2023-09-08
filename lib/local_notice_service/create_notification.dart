@@ -29,21 +29,26 @@ import '../setting_page/setting_page.dart';
         preciseAlarm: true,
       ),
       actionButtons: [
-        NotificationActionButton(
-            key: 'repeat',
-            label: 'repeat',
-            color: const Color.fromARGB(255, 25, 95, 39),
-            actionType: ActionType.SilentAction),
+
         NotificationActionButton(
           key: 'cancel',
-          label: 'cancel',
+          label: 'Отмена',
           color: Colors.red,
           actionType: ActionType.DisabledAction,
         ),
+
+        NotificationActionButton(
+            key: 'repeat',
+            label: 'Повтор',
+            color: const Color.fromARGB(255, 187, 218, 73),
+            actionType: ActionType.SilentAction,
+           ),
+
+        
         NotificationActionButton(
             key: 'next',
-            label: 'next',
-            color: const Color.fromARGB(255, 35, 22, 22),
+            label: 'Следующее',
+            color: const Color.fromARGB(255, 4, 154, 27),
             actionType: ActionType.SilentAction),
       ],
     );

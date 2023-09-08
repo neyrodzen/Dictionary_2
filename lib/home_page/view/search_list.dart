@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:push_word/home_page/model/language_choice_model.dart';
 import 'parent_list.dart';
 import '../model/search_textfield_model.dart';
 
-
-
-class SearchList   extends StatefulWidget implements ParentList  {
-  const SearchList ({Key? key}) : super(key: key);
+class SearchList extends StatefulWidget implements ParentList {
+  const SearchList({Key? key}) : super(key: key);
   @override
   State<SearchList> createState() => _SearchListState();
 
@@ -23,7 +23,6 @@ class _SearchListState extends State<SearchList> {
   );
   bool flag = false;
   String text = ' ';
-
   @override
   void initState() {
     textcontroller.addListener(onTapSearch);
@@ -38,7 +37,7 @@ class _SearchListState extends State<SearchList> {
             ?.model
             .getTranslate() ??
         'error';
-         if (!context.mounted) return;
+    if (!context.mounted) return;
     flag = await SearchTextFieldModelProvider.watch(context)
             ?.model
             .database
@@ -53,18 +52,18 @@ class _SearchListState extends State<SearchList> {
             Icons.favorite_border,
             color: Color.fromARGB(165, 244, 67, 54),
           );
+
     setState(() {});
     //  }
   }
 
   Future<void> pressFavorit() async {
     if (flag == false) {
-      
       await SearchTextFieldModelProvider.read(context)
           ?.model
           .database
           .putFavorite(textcontroller.text, text);
-           if (!context.mounted) return;
+      if (!context.mounted) return;
       await SearchTextFieldModelProvider.read(context)
           ?.model
           .database
@@ -74,13 +73,13 @@ class _SearchListState extends State<SearchList> {
           ?.model
           .database
           .deleteFavorite(textcontroller.text);
- if (!context.mounted) return;
+      if (!context.mounted) return;
       await SearchTextFieldModelProvider.read(context)
           ?.model
           .database
           .deleteLearn(textcontroller.text);
     }
-     if (!context.mounted) return;
+    if (!context.mounted) return;
     flag = await SearchTextFieldModelProvider.watch(context)
             ?.model
             .database
@@ -100,61 +99,103 @@ class _SearchListState extends State<SearchList> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const  SizedBox(
-              height: 40,
-            ),
+    String lang =
+        Provider.of<LanguageChoiceModelProvider>(context, listen: true)
+            .languageChoiceModel
+            .lang;
+    String trans =
+        Provider.of<LanguageChoiceModelProvider>(context, listen: true)
+            .languageChoiceModel
+            .trans;
+    SearchTextFieldModelProvider.read(context)?.model.lang = lang;
+    SearchTextFieldModelProvider.read(context)?.model.trans = trans;
 
-          const  SizedBox(
+    return Consumer<LanguageChoiceModelProvider>(
+      builder: (context, value, child) => SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
               height: 40,
             ),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxHeight: 380, maxWidth: 380),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              //  border: Border.all(color: Colors.blue),
-                // boxShadow: const [
-                //   BoxShadow(
-                //     offset: Offset(2, 2),
-                //     blurRadius: 0.5,
-                //     color: Colors.blue
-                //   ),
-                // ],
-                 color: const Color.fromARGB(82, 214, 213, 225),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            Center(
+                child: ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 40, maxWidth: 120),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 20),
-                    TextField(
-                      controller: textcontroller,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter text',
-                      ),
+                    Expanded(child: Center(child: Text(lang))),
+                    Expanded(
+                      child: IconButton(
+                          onPressed: () async {
+                            Provider.of<LanguageChoiceModelProvider>(context,
+                                    listen: false)
+                                .replaceLanguage();
+                          },
+                          icon: const Icon(
+                            Icons.compare_arrows,
+                          )),
                     ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            text,
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                        ),
-                        IconButton(onPressed: pressFavorit, icon: favoritButton)
-                      ],
-                    )
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(child: Center(child: Text(trans))),
                   ],
                 ),
               ),
+            )),
+            const SizedBox(
+              height: 40,
             ),
-          )
-        ],
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 380, maxWidth: 380),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  //  border: Border.all(color: Colors.blue),
+                  // boxShadow: const [
+                  //   BoxShadow(
+                  //     offset: Offset(2, 2),
+                  //     blurRadius: 0.5,
+                  //     color: Colors.blue
+                  //   ),
+                  // ],
+                  color: const Color.fromARGB(82, 124, 124, 133),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 20),
+                      TextField(
+                        controller: textcontroller,
+                        keyboardType: TextInputType.text,
+                        decoration: const InputDecoration(
+                          hintText: 'Поиск',
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              text,
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: pressFavorit, icon: favoritButton)
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

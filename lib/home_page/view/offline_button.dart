@@ -65,7 +65,7 @@ class _OfflineListButtonState extends State<OfflineListButton> {
         if (snapshot.hasData) {
           return IconButton(onPressed: onPressed, icon: favoriteIcon);
         } else if (snapshot.hasError) {
-          return const Text('Error');
+          return const Text('Ошибка');
         } else {
           return const CircularProgressIndicator();
         }

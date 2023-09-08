@@ -1,5 +1,8 @@
 
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:push_word/home_page/view/learn_list.dart';
+
 import '../view/dictionary_list.dart';
 import '../view/favorite_list.dart';
 import '../view/search_list.dart';
@@ -20,7 +23,10 @@ class ModelOfPage extends ChangeNotifier {
       case 1:
         // notifyListeners();
         return FavoritesList();
-      case 2:
+        case 2:
+        // notifyListeners();
+        return LearnList();
+      case 3:
         // notifyListeners();
         return const DictionaryList();
       default:

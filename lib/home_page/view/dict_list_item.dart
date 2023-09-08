@@ -17,26 +17,25 @@ class DictionaryListItem extends StatelessWidget {
                 height: 50,
               ),
               Expanded(
-                  flex: 1,
-                  child: Container(),
-                ),
+                flex: 1,
+                child: Container(),
+              ),
               Expanded(
-                  flex: 4,
+                flex: 4,
                 child: Text(
                   word.list[index]['ru'] as String,
                   style: const TextStyle(
                     fontSize: 20,
                   ),
                 ),
-
               ),
               const Expanded(
                   flex: 1,
                   child: SizedBox(
-                width: 20,
-              )),
+                    width: 20,
+                  )),
               Expanded(
-                  flex: 4,
+                flex: 4,
                 child: Text(word.list[index]['en'] as String,
                     style: const TextStyle(
                       fontSize: 20,
@@ -49,12 +48,11 @@ class DictionaryListItem extends StatelessWidget {
             ],
           ),
           const Divider(
-            color: Colors.black,
-               thickness: 1,
-              indent: 10,
-              endIndent: 10,
+            color: Color.fromARGB(255, 35, 35, 35),
+            thickness: 1,
+            indent: 10,
+            endIndent: 10,
           ),
-          
         ],
       ),
     );

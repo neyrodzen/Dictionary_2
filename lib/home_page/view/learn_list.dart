@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import '../../data_base/data_base.dart';
 import 'parent_list.dart';
 
-class FavoritesList extends StatelessWidget implements ParentList {
-  FavoritesList({Key? key}) : super(key: key);
+class LearnList extends StatelessWidget implements ParentList {
+  
+     LearnList ({Key? key}) : super(key: key);
   final DataBase dataBase = DataBase();
 
-  Future<void> inLearn(String key, String value) async {
-    await dataBase.putLearn(key, value);
-    await dataBase.deleteFavorite(key);
+  Future<void> delete(String key) async {
+    await dataBase.deleteLearn(key);
   }
 
   @override
@@ -20,27 +20,24 @@ class FavoritesList extends StatelessWidget implements ParentList {
   @override
   Future<Widget> makeSome() async {
     var list = <Widget>[];
-    final Map<dynamic, String> map = await dataBase.getListFavorite();
+    final Map<dynamic, String> map = await dataBase.getListLearn();
 
-    map.forEach((key, value)  {
+    map.forEach((key, value) async {
       list.add(Dismissible(
-        
-        background: Container(
-          color: Colors.green,
-          child: const Icon(Icons.done),
+           background: Container(
+          color: Colors.red,
+          child: const Icon(Icons.delete),
         ),
-        key:  UniqueKey(),
+         key:  UniqueKey(),
         onDismissed: (DismissDirection direction) {
-          inLearn('$key', value);
+          delete('$key');
         },
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                const SizedBox(
-                  height: 50,
-                ),
+            const SizedBox(height: 50,),
                 Expanded(
                   flex: 1,
                   child: Container(),

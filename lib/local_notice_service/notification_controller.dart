@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import '../data_base/data_base.dart';
 import 'create_notification.dart';
 
- class  NotificationController {
-
+class NotificationController {
   static ReceivedAction? initialAction;
+  final DataBase dataBase = DataBase();
 
   NotifiCreate notifiCreate = NotifiCreate();
   static Future<void> initializeLocalNotifications() async {
@@ -40,6 +40,7 @@ import 'create_notification.dart';
   static Future<void> startListeningNotificationEvents() async {
     AwesomeNotifications()
         .setListeners(onActionReceivedMethod: onActionReceivedMethod);
+   
   }
 
   /// Use this method to detect when the user taps on a notification or action button

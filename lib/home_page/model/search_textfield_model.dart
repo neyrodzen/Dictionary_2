@@ -6,11 +6,16 @@ import '../api_client/api_client.dart';
 class SearchTextFieldModel extends ChangeNotifier {
   String key = '';
   String value = '';
+  String lang = 'en';
+  String trans = 'ru';
   DataBase database = DataBase();
 
   Future<String> getTranslate() async {
     ApiClient apiClient = ApiClient();
-    String translate = await apiClient.getHttp(key) ?? key;
+    String translate = await apiClient.getHttp(
+          key, lang, trans
+        ) ??
+        key;
     if (key.length < 2) {
       translate = ' ';
     }
