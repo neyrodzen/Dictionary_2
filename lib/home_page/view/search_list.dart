@@ -64,20 +64,20 @@ class _SearchListState extends State<SearchList> {
           .database
           .putFavorite(textcontroller.text, text);
       if (!context.mounted) return;
-      await SearchTextFieldModelProvider.read(context)
-          ?.model
-          .database
-          .putLearn(textcontroller.text, text);
+      // await SearchTextFieldModelProvider.read(context)
+      //     ?.model
+      //     .database
+      //     .putLearn(textcontroller.text, text);
     } else {
       await SearchTextFieldModelProvider.read(context)
           ?.model
           .database
           .deleteFavorite(textcontroller.text);
       if (!context.mounted) return;
-      await SearchTextFieldModelProvider.read(context)
-          ?.model
-          .database
-          .deleteLearn(textcontroller.text);
+      // await SearchTextFieldModelProvider.read(context)
+      //     ?.model
+      //     .database
+      //     .deleteLearn(textcontroller.text);
     }
     if (!context.mounted) return;
     flag = await SearchTextFieldModelProvider.watch(context)

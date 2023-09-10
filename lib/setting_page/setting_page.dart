@@ -2,7 +2,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:flutter/material.dart';
-
+import 'package:yandex_mobileads/mobile_ads.dart';
 import '../local_notice_service/create_notification.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -22,7 +22,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
-
+    
     focusNode = FocusNode();
   }
 
@@ -30,6 +30,21 @@ class _SettingsPageState extends State<SettingsPage> {
   void dispose() {
     focusNode.dispose();
     super.dispose();
+  }
+
+  Future<void> showInterstitialAd() async {
+    final ad = await InterstitialAd.create(
+      adUnitId: 'demo-interstitial-yandex',
+      onAdLoaded: () {
+        /* Do something */
+      },
+      onAdFailedToLoad: (error) {
+        /* Do something */
+      },
+    );
+    await ad.load(adRequest: const AdRequest());
+    await ad.show();
+    await ad.waitForDismiss();
   }
 
   void requestPermissions() async {
@@ -65,7 +80,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void ontapQuestions() {
     Navigator.of(context).pushNamed('/question_page');
-    
+
     setState(() {});
   }
 
@@ -175,6 +190,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           onPressed: () {
                             dismissKeyboard();
                             requestPermissions();
+                            showInterstitialAd();
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
                               content: Text("Уведомление создано"),
@@ -249,15 +265,15 @@ class _SettingsPageState extends State<SettingsPage> {
                   const SizedBox(
                     height: 25,
                   ),
-                  const Divider(
-                    color: Color.fromARGB(255, 35, 35, 35),
-                    thickness: 1,
-                    indent: 10,
-                    endIndent: 10,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
+                  // const Divider(
+                  //   color: Color.fromARGB(255, 35, 35, 35),
+                  //   thickness: 1,
+                  //   indent: 10,
+                  //   endIndent: 10,
+                  // ),
+                  // const SizedBox(
+                  //   height: 25,
+                  // ),
                   // Row(
                   //   children: [
                   //     const SizedBox(
@@ -306,7 +322,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   //   endIndent: 10,
                   // ),
                   // const SizedBox(
-                  //   height: 50,
+                  //   height: 100,
                   // ),
                   // ConstrainedBox(
                   //     constraints:

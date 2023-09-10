@@ -7,6 +7,8 @@ import 'home_page/model/model_page.dart';
 import 'home_page/model/model_page_provider.dart';
 import 'local_notice_service/notification_controller.dart';
 import 'setting_page/setting_page.dart';
+import 'package:yandex_mobileads/mobile_ads.dart';
+
 
 Future<void> main() async {
   await NotificationController.initializeLocalNotifications();
@@ -32,7 +34,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     NotificationController.startListeningNotificationEvents();
-
+    MobileAds.initialize();
     super.initState();
   }
 
@@ -59,7 +61,6 @@ class _MyAppState extends State<MyApp> {
         title: 'Английский в уведомлениях',
         theme: theme,
         darkTheme: darkTheme,
-        
 
         navigatorKey: MyApp.navigatorKey,
         //title: MyApp.name,
