@@ -19,7 +19,7 @@ class NotificationController {
           channelKey: 'basic_channel',
           channelName: 'Basic notifications',
           channelDescription: 'Notification channel for basic tests',
-          defaultColor: const Color(0xFF9D50DD),
+          defaultColor: const Color.fromARGB(255, 218, 171, 4),
           ledColor: Colors.white,
           enableVibration: true,
         )
@@ -40,21 +40,30 @@ class NotificationController {
   static Future<void> startListeningNotificationEvents() async {
     AwesomeNotifications()
         .setListeners(onActionReceivedMethod: onActionReceivedMethod);
-   
   }
 
   /// Use this method to detect when the user taps on a notification or action button
   @pragma("vm:entry-point")
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
-    if (receivedAction.buttonKeyPressed == 'repeat') {
-      await NotifiCreate().getWords();
-      NotifiCreate().create();
+    if (await DataBase().getSpin() > 0) {
+      if (receivedAction.buttonKeyPressed == 'repeat') {
+        await NotifiCreate().getWords();
+        NotifiCreate().create();
+        await DataBase().deleteSpin();
+      }
+      if (receivedAction.buttonKeyPressed == 'next') {
+        DataBase.count++;
+        await NotifiCreate().getWords();
+        NotifiCreate().create();
+        await DataBase().deleteSpin();
+      }
+      if (receivedAction.buttonKeyPressed == 'cancel') {
+        await DataBase().deleteSpin();
+      }
     }
-    if (receivedAction.buttonKeyPressed == 'next') {
-      DataBase.count++;
-      await NotifiCreate().getWords();
-      NotifiCreate().create();
+    else{
+      NotifiCreate().warning();
     }
   }
 }

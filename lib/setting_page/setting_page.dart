@@ -1,9 +1,10 @@
 import 'package:permission_handler/permission_handler.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:push_word/data_base/data_base.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:flutter/material.dart';
-import 'package:yandex_mobileads/mobile_ads.dart';
 import '../local_notice_service/create_notification.dart';
+import 'package:yandex_mobileads/mobile_ads.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -19,32 +20,26 @@ class _SettingsPageState extends State<SettingsPage> {
   String textError = 'ошибка';
   NotifiCreate notifiCreate = NotifiCreate();
   late FocusNode focusNode;
+  DataBase dataBase = DataBase();
+  late int spin;
   @override
   void initState() {
     super.initState();
-    
+    dataBase.initialSpin();
+    showInterstitialAd();
     focusNode = FocusNode();
+  }
+
+  Future<int> getSpin() async {
+    var spin = dataBase.getSpin();
+    setState(() {});
+    return spin;
   }
 
   @override
   void dispose() {
     focusNode.dispose();
     super.dispose();
-  }
-
-  Future<void> showInterstitialAd() async {
-    final ad = await InterstitialAd.create(
-      adUnitId: 'demo-interstitial-yandex',
-      onAdLoaded: () {
-        /* Do something */
-      },
-      onAdFailedToLoad: (error) {
-        /* Do something */
-      },
-    );
-    await ad.load(adRequest: const AdRequest());
-    await ad.show();
-    await ad.waitForDismiss();
   }
 
   void requestPermissions() async {
@@ -80,8 +75,45 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void ontapQuestions() {
     Navigator.of(context).pushNamed('/question_page');
-
     setState(() {});
+  }
+
+  Future<void> showInterstitialAd() async {
+    final ad = await InterstitialAd.create(
+      adUnitId: 'R-M-2953427-1',
+      onAdLoaded: () {},
+      onAdFailedToLoad: (error) {
+        /* Do something */
+      },
+    );
+    await ad.load(adRequest: const AdRequest());
+    await ad.show();
+    await ad.waitForDismiss();
+  }
+
+  void getSnackBar(String text) {
+     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(text),
+    ));
+  }
+
+  Future<void> showRewardedAd() async {
+    final ad = await RewardedAd.create(
+      adUnitId: 'R-M-2953427-2',
+      onAdLoaded: () {},
+      onAdFailedToLoad: (error) {
+        /* Do something */
+      },
+    );
+    await ad.load(adRequest: const AdRequest());
+    await ad.show();
+    final reward = await ad.waitForDismiss();
+    if (reward != null) {
+      //getSnackBar('Получено!');
+     await dataBase.putSpin();
+     setState(() {
+     });
+    }
   }
 
   @override
@@ -138,7 +170,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     ],
                   ),
-
                   const Divider(
                     color: Color.fromARGB(255, 35, 35, 35),
                     thickness: 1,
@@ -162,12 +193,25 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       SizedBox(
                         width: 60,
-                        height: 40,
+                        height: 35,
                         child: TextField(
                             textAlign: TextAlign.center,
                             focusNode: focusNode,
                             keyboardType: TextInputType.number,
                             controller: textEditingController,
+                            onTapOutside: (event) { 
+                              dismissKeyboard();
+                            setState(() {
+                            });},
+                            onEditingComplete: () {
+                              dismissKeyboard();
+                              if (spin > 0) {
+                                requestPermissions();
+                                getSnackBar("Уведомления созданы");
+                              } else {
+                                getSnackBar('Уведомления закончились. Получите Free Push');
+                              }
+                            },
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
@@ -185,16 +229,17 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                       SizedBox(
-                        height: 40,
+                        height: 35,
+                        width: 60,
                         child: ElevatedButton(
                           onPressed: () {
                             dismissKeyboard();
-                            requestPermissions();
-                            showInterstitialAd();
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text("Уведомление создано"),
-                            ));
+                            if (spin > 0) {
+                              requestPermissions();
+                              getSnackBar("Уведомления созданы");
+                            } else {
+                              getSnackBar('Получите Free Push');
+                            }
                           },
                           child: const Text('Ok'),
                         ),
@@ -229,20 +274,25 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       )),
                       SizedBox(
-                        height: 40,
+                        height: 35,
                         child: ToggleSwitch(
                           customWidths: const [60.0, 60.0],
                           cornerRadius: 5.0,
                           activeBgColors: const [
-                            [Colors.blue],
-                            [Color.fromARGB(255, 91, 88, 88)]
+                            [Color.fromARGB(212, 5, 165, 205)],
+                            [Color.fromARGB(255, 54, 53, 53)]
                           ],
                           initialLabelIndex:
                               Theme.of(context).brightness == Brightness.light
                                   ? 0
                                   : 1,
                           activeFgColor: Colors.white,
-                          inactiveBgColor: Colors.grey,
+                        animate: true,
+                        animationDuration: 300,
+                          inactiveBgColor:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? const Color.fromARGB(130, 54, 53, 53)
+                                  : const Color.fromARGB(51, 6, 197, 245),
                           inactiveFgColor: Colors.white,
                           totalSwitches: 2,
                           radiusStyle: true,
@@ -261,83 +311,92 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     ],
                   ),
-
                   const SizedBox(
                     height: 25,
                   ),
-                  // const Divider(
-                  //   color: Color.fromARGB(255, 35, 35, 35),
-                  //   thickness: 1,
-                  //   indent: 10,
-                  //   endIndent: 10,
-                  // ),
-                  // const SizedBox(
-                  //   height: 25,
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     const SizedBox(
-                  //       width: 15,
-                  //     ),
-                  //     const Text('Доступно уведомлений:',
-                  //         style: TextStyle(
-                  //           fontSize: 16,
-                  //         )),
-                  //     const Expanded(
-                  //       child: SizedBox(),
-                  //     ),
-                  //     ConstrainedBox(
-                  //       constraints: const BoxConstraints(
-                  //         maxHeight: 40,
-                  //         maxWidth: 60,
-                  //         minHeight: 40,
-                  //         minWidth: 60,
-                  //       ),
-                  //       child: DecoratedBox(
-                  //         decoration: BoxDecoration(
-                  //             borderRadius: BorderRadius.circular(5),
-                  //             color: const Color.fromARGB(183, 185, 24, 29)),
-                  //         child: const Center(
-                  //           child: Text(
-                  //             'data',
-                  //             style: TextStyle(
-                  //               fontSize: 16,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     const SizedBox(
-                  //       width: 15,
-                  //     ),
-                  //   ],
-                  // ),
-                  // const SizedBox(
-                  //   height: 25,
-                  // ),
-                  // const Divider(
-                  //   color: Color.fromARGB(255, 35, 35, 35),
-                  //   thickness: 1,
-                  //   indent: 10,
-                  //   endIndent: 10,
-                  // ),
-                  // const SizedBox(
-                  //   height: 100,
-                  // ),
-                  // ConstrainedBox(
-                  //     constraints:
-                  //         const BoxConstraints(minHeight: 40, minWidth: 120),
-                  //     child: ElevatedButton(
-                  //         onPressed: () {},
-                  //         style: ButtonStyle(
-                  //             shape: MaterialStateProperty.all(
-                  //               RoundedRectangleBorder(
-                  //                 borderRadius: BorderRadius.circular(5),
-                  //               ),
-                  //             ),
-                  //             backgroundColor:
-                  //                 MaterialStateProperty.all(Colors.green)),
-                  //         child: const Text('Купить')))
+                  const Divider(
+                    color: Color.fromARGB(255, 35, 35, 35),
+                    thickness: 1,
+                    indent: 10,
+                    endIndent: 10,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      const Text('Доступно уведомлений:',
+                          style: TextStyle(
+                            fontSize: 16,
+                          )),
+                      const Expanded(
+                        child: SizedBox(),
+                      ),
+                      ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          maxHeight: 35,
+                          maxWidth: 60,
+                          minHeight: 35,
+                          minWidth: 60,
+                        ),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: const Color.fromARGB(183, 185, 24, 29)),
+                          child: Center(
+                            child: FutureBuilder(
+                                future: getSpin(),
+                                builder: (context, AsyncSnapshot snapshot) {
+                                  spin = snapshot.data;
+                                  return Text(
+                                    snapshot.data.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  );
+                                }),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  const Divider(
+                    color: Color.fromARGB(255, 35, 35, 35),
+                    thickness: 1,
+                    indent: 10,
+                    endIndent: 10,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ConstrainedBox(
+                      constraints:
+                          const BoxConstraints(minHeight: 40, minWidth: 120),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            showRewardedAd();
+                          },
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.green)),
+                          child: const Text('Free Push'))),
+                  const SizedBox(
+                    height: 20,
+                  ),
                 ],
               ),
             ),

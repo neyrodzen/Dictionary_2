@@ -1,16 +1,37 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
-Map<int, Color> color = {
-  50: const Color.fromARGB(23, 13, 2, 1),
-  100: const Color.fromARGB(23, 13, 2, 1),
-  200: const Color.fromARGB(23, 13, 2, 2),
-  300: const Color.fromARGB(23, 13, 2, 3),
-  400: const Color.fromARGB(23, 13, 2, 4),
-  500: const Color.fromARGB(23, 13, 2, 5),
-  600: const Color.fromARGB(23, 13, 2, 6),
-  700: const Color.fromARGB(23, 13, 2, 7),
-  800: const Color.fromARGB(23, 13, 2, 8),
-  900: const Color.fromARGB(23, 13, 2, 9),
-};
+class MaterialColorGenerator{
+  static MaterialColor from(Color color) {
+    return MaterialColor(color.value, {
+      50: tintColor(color, 0.9),
+      100: tintColor(color, 0.8),
+      200: tintColor(color, 0.6),
+      300: tintColor(color, 0.4),
+      400: tintColor(color, 0.2),
+      500: color,
+      600: shadeColor(color, 0.1),
+      700: shadeColor(color, 0.2),
+      800: shadeColor(color, 0.3),
+      900: shadeColor(color, 0.4),
+    });
+  }
 
-MaterialColor colorCustom = MaterialColor(0xFF880E4F, color);
+  static int tintValue(int value, double factor) =>
+      max(0, min((value + ((255 - value) * factor)).round(), 255));
+
+  static Color tintColor(Color color, double factor) => Color.fromRGBO(
+      tintValue(color.red, factor),
+      tintValue(color.green, factor),
+      tintValue(color.blue, factor),
+      1);
+
+  static int shadeValue(int value, double factor) =>
+      max(0, min(value - (value * factor).round(), 255));
+
+  static Color shadeColor(Color color, double factor) => Color.fromRGBO(
+      shadeValue(color.red, factor),
+      shadeValue(color.green, factor),
+      shadeValue(color.blue, factor),
+      1);
+}

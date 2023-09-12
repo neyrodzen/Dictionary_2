@@ -1,10 +1,35 @@
-
 import 'package:hive/hive.dart';
 
 class DataBase {
   bool isFavorit = false;
   static int count = 0;
-  
+
+  Future<void> initialSpin() async {
+    var spin = await Hive.openBox<int>('SpinBox');
+    bool flag = spin.containsKey('spin');
+    if (!flag) {
+      spin.put('spin', 100);
+    }
+  }
+
+  Future<void> putSpin() async {
+    var spin = await Hive.openBox<int>('SpinBox');
+    int value = spin.get('spin') ?? 0;
+    spin.put('spin', value + 30);
+  }
+
+  Future<int> getSpin() async {
+    var spin = await Hive.openBox<int>('SpinBox');
+    int value = spin.get('spin') ?? 0;
+    return value;
+  }
+
+  Future<void> deleteSpin() async {
+    var spin = await Hive.openBox<int>('SpinBox');
+    int value = spin.get('spin') ?? 0;
+    spin.put('spin', value -1);
+  }
+
   Future<void> putFavorite(String key, String value) async {
     var boxFavorite = await Hive.openBox<String>('FavoriteBox');
     await boxFavorite.put(key, value);
@@ -26,13 +51,12 @@ class DataBase {
     return flag;
   }
 
-  Future<Map<dynamic,String>> getListFavorite() async {
-
+  Future<Map<dynamic, String>> getListFavorite() async {
     var boxFavorite = await Hive.openBox<String>('FavoriteBox');
     var map = boxFavorite.toMap();
-   
+
     await boxFavorite.close();
-    return map ;
+    return map;
   }
 
   Future<void> putLearn(String key, String value) async {
@@ -57,10 +81,9 @@ class DataBase {
   Future<Map<dynamic, String>> getListLearn() async {
     final boxLearn = await Hive.openBox<String>('LearnBox');
     var map = boxLearn.toMap();
-   
+
     await boxLearn.close();
-    return map ;
-   
+    return map;
   }
 
   Future<int> getLenghtLearnBox() async {

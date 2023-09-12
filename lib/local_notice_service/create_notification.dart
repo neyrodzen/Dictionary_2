@@ -23,10 +23,14 @@ import '../setting_page/setting_page.dart';
           body: values,
           actionType: ActionType.SilentAction,
           wakeUpScreen: false,
+          backgroundColor: const Color.fromARGB(224, 7, 193, 165),
+          displayOnBackground: true,
           category: NotificationCategory.Message),
+          
       schedule: NotificationInterval(
         interval: sec*60,
         preciseAlarm: true,
+        
       ),
       actionButtons: [
 
@@ -54,6 +58,21 @@ import '../setting_page/setting_page.dart';
     );
   }
 
+void warning() {
+
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+          id: 10,
+          channelKey: 'basic_channel',
+          title: 'Уведомления закончились',
+          body: 'Получите Free Push',
+          actionType: ActionType.SilentAction,
+          wakeUpScreen: false,
+          backgroundColor: const Color.fromARGB(224, 7, 193, 165),
+          displayOnBackground: true,
+          category: NotificationCategory.Message),
+    );
+  }
   Future<void> getWords() async {
     Map<String, String> mapa = await database.getNextWords();
     keys = mapa.keys.elementAt(0);

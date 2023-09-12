@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:push_word/home_page/model/language_choice_model.dart';
 import 'parent_list.dart';
 import '../model/search_textfield_model.dart';
+import 'package:yandex_mobileads/mobile_ads.dart';
+import 'dart:async';
 
 class SearchList extends StatefulWidget implements ParentList {
   const SearchList({Key? key}) : super(key: key);
@@ -21,17 +23,37 @@ class _SearchListState extends State<SearchList> {
     Icons.favorite_border,
     color: Color.fromARGB(165, 244, 67, 54),
   );
+  late FocusNode focusNode;
   bool flag = false;
   String text = ' ';
+  Timer _debounce = Timer(const Duration(milliseconds: 500), () {});
+
   @override
   void initState() {
-    textcontroller.addListener(onTapSearch);
+    textcontroller.addListener((){
+ if (_debounce.isActive) _debounce.cancel();
+    {
+      _debounce = Timer(const Duration(milliseconds: 1000), onTapSearch);
+    }
+    });
+    focusNode = FocusNode();
     super.initState();
   }
 
+  @override
+  void dispose() {
+    focusNode.dispose();
+    _debounce.cancel();
+    super.dispose();
+  }
+
+  void dismissKeyboard() {
+    focusNode.unfocus();
+  }
+
   Future<void> onTapSearch() async {
+   
     String enter = textcontroller.text;
-    // if (enter.isNotEmpty) {
     SearchTextFieldModelProvider.read(context)?.model.key = enter;
     text = await SearchTextFieldModelProvider.read(context)
             ?.model
@@ -54,7 +76,6 @@ class _SearchListState extends State<SearchList> {
           );
 
     setState(() {});
-    //  }
   }
 
   Future<void> pressFavorit() async {
@@ -97,6 +118,18 @@ class _SearchListState extends State<SearchList> {
     setState(() {});
   }
 
+  final banner = BannerAd(
+    adUnitId: 'R-M-2953427-3',
+    adSize: const AdSize.sticky(width: 400),
+    adRequest: const AdRequest(),
+    onAdLoaded: () {
+      /* Do something */
+    },
+    onAdFailedToLoad: (error) {
+      /* Do something */
+    },
+  );
+
   @override
   Widget build(BuildContext context) {
     String lang =
@@ -132,6 +165,7 @@ class _SearchListState extends State<SearchList> {
                             Provider.of<LanguageChoiceModelProvider>(context,
                                     listen: false)
                                 .replaceLanguage();
+                            setState(() {});
                           },
                           icon: const Icon(
                             Icons.compare_arrows,
@@ -153,15 +187,16 @@ class _SearchListState extends State<SearchList> {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  //  border: Border.all(color: Colors.blue),
-                  // boxShadow: const [
-                  //   BoxShadow(
-                  //     offset: Offset(2, 2),
-                  //     blurRadius: 0.5,
-                  //     color: Colors.blue
-                  //   ),
-                  // ],
-                  color: const Color.fromARGB(82, 124, 124, 133),
+                  //  border: Border.all(color: Color.fromARGB(21, 0, 0, 0),width: 5),
+                  boxShadow: const [
+                    BoxShadow(
+                        //  offset: Offset(2, 2),
+                        blurRadius: 10,
+                        color: Color.fromARGB(79, 64, 64, 64)),
+                  ],
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Theme.of(context).scaffoldBackgroundColor
+                      : Theme.of(context).primaryColor,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -171,6 +206,18 @@ class _SearchListState extends State<SearchList> {
                       const SizedBox(height: 20),
                       TextField(
                         controller: textcontroller,
+                        onTap: () {
+                          Future.delayed(const Duration(seconds: 1), () {});
+                        },
+                        onTapOutside: (event) {
+                          dismissKeyboard();
+                          onTapSearch();
+                        },
+                        onEditingComplete: () {
+                          dismissKeyboard();
+                          onTapSearch();
+                        },
+                        focusNode: focusNode,
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                           hintText: 'Поиск',
@@ -193,7 +240,10 @@ class _SearchListState extends State<SearchList> {
                   ),
                 ),
               ),
-            )
+            ),
+            const SizedBox(height: 50),
+            AdWidget(bannerAd: banner),
+            const SizedBox(height: 10),
           ],
         ),
       ),

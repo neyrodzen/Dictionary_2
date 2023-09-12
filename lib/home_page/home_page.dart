@@ -37,82 +37,82 @@ class _HomePageState extends State<HomePage> {
       if (index == 1) {
         var listfavorit = await FavoritesList().makeSome();
         listWidget = listfavorit;
-        
       } else if (index == 0) {
         listWidget = list as Widget;
       } else if (index == 2) {
-         var listlearn = await LearnList().makeSome();
+        var listlearn = await LearnList().makeSome();
         listWidget = listlearn;
-        
-      }
-        else if (index == 3) {
+      } else if (index == 3) {
         listWidget = list as Widget;
       }
       setState(() {});
     }
 
+  
     return ChangeNotifierProvider(
       create: (context) => LanguageChoiceModelProvider(),
-
-        child: Scaffold(
-          // floatingActionButton:,
-          appBar: AppBar(
-              actions: [
-                ElevatedButton(
-                  onPressed: ontapSettings,
-                  child: const Icon(Icons.settings),
-                ),
-              ],
-              title: const Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Английский в уведомлениях',
-                    ),
-                  ),
-                ],
-              )),
-          body: ConstrainedBox(
-            constraints: const BoxConstraints(
-              minHeight: double.infinity,
-              minWidth: double.infinity,
-            ),
-            child: ColoredBox(
-              color: Theme.of(context).brightness == Brightness.light
-                  ? Colors.white
-                  : Theme.of(context).primaryColor,
-              child: SearchTextFieldModelProvider(
-                  model: modelSearch, child: listWidget),
-            ),
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            //backgroundColor: Theme.of(context).primaryColor,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: 'Поиск',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_outline),
-                label: 'Избранное',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.done),
-                label: 'Изучено',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.list),
-                label: 'Словарь',
+      child: Scaffold(
+        // floatingActionButton:,
+        appBar: AppBar(
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  ontapSettings();
+                },
+                
+                child: const Icon(Icons.settings),
+                
               ),
             ],
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white38,
-            onTap: onTapBottom,
-            currentIndex: indexItem,
+            title: const Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Английский в уведомлениях',
+                  ),
+                ),
+              ],
+            )),
+        body: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: double.infinity,
+            minWidth: double.infinity,
+          ),
+          child: ColoredBox(
+            color: Theme.of(context).brightness == Brightness.light
+                ? Theme.of(context).scaffoldBackgroundColor
+                : Theme.of(context).scaffoldBackgroundColor,
+            child: SearchTextFieldModelProvider(
+                model: modelSearch, child: listWidget),
           ),
         ),
-      
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          //backgroundColor: Theme.of(context).primaryColor,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Поиск',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_outline),
+              label: 'Избранное',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.done),
+              label: 'Изучено',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: 'Словарь',
+            ),
+          ],
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white38,
+          onTap: onTapBottom,
+          currentIndex: indexItem,
+        ),
+      ),
     );
   }
 }

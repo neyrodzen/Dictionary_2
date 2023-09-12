@@ -5,6 +5,7 @@ import 'package:push_word/home_page/view/question_page.dart';
 import 'home_page/home_page.dart';
 import 'home_page/model/model_page.dart';
 import 'home_page/model/model_page_provider.dart';
+import 'home_page/view/my_colors.dart';
 import 'local_notice_service/notification_controller.dart';
 import 'setting_page/setting_page.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
@@ -44,19 +45,20 @@ class _MyAppState extends State<MyApp> {
     return AdaptiveTheme(
       light: ThemeData(
         brightness: Brightness.light,
-        primarySwatch: Colors.blue,
+        primarySwatch:  MaterialColorGenerator.from(const Color.fromARGB(212, 5, 165, 205)),
+        primaryColor: const Color.fromARGB(212, 5, 165, 205),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Color.fromARGB(255, 12, 108, 187),
+          backgroundColor: Color.fromARGB(211, 3, 125, 155),
         ),
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
-        primarySwatch: Colors.grey,
-        primaryColor: const Color.fromARGB(255, 65, 61, 61),
+        primarySwatch:  MaterialColorGenerator.from(const Color.fromARGB(115, 79, 78, 78)),
+        primaryColor: const Color.fromARGB(115, 79, 78, 78),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Color.fromARGB(255, 39, 36, 36)),
       ),
-      initial: AdaptiveThemeMode.light,
+      initial: AdaptiveThemeMode.dark,
       builder: (theme, darkTheme) => MaterialApp(
         title: 'Английский в уведомлениях',
         theme: theme,
