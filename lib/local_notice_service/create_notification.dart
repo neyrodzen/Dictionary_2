@@ -2,7 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
 import '../data_base/data_base.dart';
-import '../setting_page/setting_page.dart';
+import '../view/setting_page.dart';
 
  class NotifiCreate {
  static String keys = 'word';

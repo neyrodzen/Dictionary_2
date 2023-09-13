@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../data_base/data_base.dart';
+import '../data_base/data_base.dart';
 import '../api_client/api_client.dart';
 
 class SearchTextFieldModel extends ChangeNotifier {

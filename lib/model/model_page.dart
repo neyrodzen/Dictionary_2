@@ -1,7 +1,7 @@
 
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:push_word/home_page/view/learn_list.dart';
+import 'package:push_word/view/learn_list.dart';
 
 import '../view/dictionary_list.dart';
 import '../view/favorite_list.dart';

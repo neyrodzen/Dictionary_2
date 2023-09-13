@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../data_base/data_base.dart';
+import '../data_base/data_base.dart';
 
 class OfflineListButton extends StatefulWidget {
   const OfflineListButton(this.text, this.translate, {super.key});

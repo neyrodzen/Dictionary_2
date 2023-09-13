@@ -2,6 +2,7 @@
     package="com.example.dictionary_with_not">
    <uses-permission android:name="android.permission.INTERNET"/>
    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+   <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
    <application
         android:label="Английский в уведомлениях"
         android:name="${applicationName}"

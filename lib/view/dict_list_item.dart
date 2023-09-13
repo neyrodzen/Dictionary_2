@@ -1,4 +1,4 @@
-import 'package:push_word/home_page/view/offline_button.dart';
+import 'package:push_word/view/offline_button.dart';
 import 'package:flutter/material.dart';
 import 'package:push_word/word_list.dart' as word;
 

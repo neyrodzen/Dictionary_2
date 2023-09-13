@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../data_base/data_base.dart';
+import '../data_base/data_base.dart';
 import 'parent_list.dart';
 
 class LearnList extends StatelessWidget implements ParentList {

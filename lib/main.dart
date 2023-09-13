@@ -1,13 +1,13 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:push_word/home_page/view/question_page.dart';
-import 'home_page/home_page.dart';
-import 'home_page/model/model_page.dart';
-import 'home_page/model/model_page_provider.dart';
-import 'home_page/view/my_colors.dart';
+import 'package:push_word/view/question_page.dart';
+import 'view/home_page.dart';
+import 'model/model_page.dart';
+import 'model/model_page_provider.dart';
+import 'view/my_colors.dart';
 import 'local_notice_service/notification_controller.dart';
-import 'setting_page/setting_page.dart';
+import 'view/setting_page.dart';
 import 'package:yandex_mobileads/mobile_ads.dart';
 
 

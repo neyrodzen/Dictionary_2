@@ -1,13 +1,13 @@
 import 'package:provider/provider.dart';
-import 'package:push_word/home_page/view/favorite_list.dart';
-import 'package:push_word/home_page/view/learn_list.dart';
-import 'package:push_word/home_page/view/search_list.dart';
+import 'package:push_word/view/favorite_list.dart';
+import 'package:push_word/view/learn_list.dart';
+import 'package:push_word/view/search_list.dart';
 import 'package:flutter/material.dart';
 
-import 'model/language_choice_model.dart';
-import 'model/model_page_provider.dart';
-import 'view/parent_list.dart';
-import 'model/search_textfield_model.dart';
+import '../model/language_choice_model.dart';
+import '../model/model_page_provider.dart';
+import 'parent_list.dart';
+import '../model/search_textfield_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
