@@ -1,6 +1,8 @@
+
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:push_word/view/languages_page.dart';
 import 'package:push_word/view/question_page.dart';
 import 'view/home_page.dart';
 import 'model/model_page.dart';
@@ -13,7 +15,6 @@ import 'package:yandex_mobileads/mobile_ads.dart';
 
 Future<void> main() async {
   await NotificationController.initializeLocalNotifications();
-
   await Hive.initFlutter();
   runApp(const MyApp());
 }
@@ -45,7 +46,8 @@ class _MyAppState extends State<MyApp> {
     return AdaptiveTheme(
       light: ThemeData(
         brightness: Brightness.light,
-        primarySwatch:  MaterialColorGenerator.from(const Color.fromARGB(212, 5, 165, 205)),
+        primarySwatch:
+            MaterialColorGenerator.from(const Color.fromARGB(212, 5, 165, 205)),
         primaryColor: const Color.fromARGB(212, 5, 165, 205),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Color.fromARGB(211, 3, 125, 155),
@@ -53,7 +55,8 @@ class _MyAppState extends State<MyApp> {
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
-        primarySwatch:  MaterialColorGenerator.from(const Color.fromARGB(115, 79, 78, 78)),
+        primarySwatch:
+            MaterialColorGenerator.from(const Color.fromARGB(115, 79, 78, 78)),
         primaryColor: const Color.fromARGB(115, 79, 78, 78),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Color.fromARGB(255, 39, 36, 36)),
@@ -71,7 +74,8 @@ class _MyAppState extends State<MyApp> {
         routes: {
           //'/': (context) => HomePage(),
           '/settings_page': (context) => const SettingsPage(),
-          '/question_page': (context) => const QuestionPage()
+          '/question_page': (context) => const QuestionPage(),
+          '/languages_page':  (context) => const LanguagesPage(),
         },
         // initialRoute: '/'
       ),

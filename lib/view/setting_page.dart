@@ -1,10 +1,12 @@
 import 'package:permission_handler/permission_handler.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:provider/provider.dart';
 import 'package:push_word/data_base/data_base.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:flutter/material.dart';
 import '../local_notice_service/create_notification.dart';
-import 'package:yandex_mobileads/mobile_ads.dart';
+import '../model/language_choice_model.dart';
+//import 'package:yandex_mobileads/mobile_ads.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -22,20 +24,31 @@ class _SettingsPageState extends State<SettingsPage> {
   late FocusNode focusNode;
   DataBase dataBase = DataBase();
   late int spin;
+  late String languege;
   @override
   void initState() {
     super.initState();
     dataBase.initialSpin();
-    showInterstitialAd();
+    dataBase.initialNativeLanguage();
+    // showInterstitialAd();
     focusNode = FocusNode();
   }
 
   Future<int> getSpin() async {
-    var spin = dataBase.getSpin();
+    var spin = await dataBase.getSpin();
     setState(() {});
     return spin;
   }
 
+  Future<String> getLanguage() async {
+    var lang = await dataBase.getNativeLanguage();
+    setState(() {});
+    return lang;
+  }
+  Future<void> initLanguage() async {
+  Provider.of<LanguageChoiceModelProvider>(context, listen: true)
+          .setLanguage();
+  }
   @override
   void dispose() {
     focusNode.dispose();
@@ -78,43 +91,48 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {});
   }
 
-  Future<void> showInterstitialAd() async {
-    final ad = await InterstitialAd.create(
-      adUnitId: 'R-M-2953427-1',
-      onAdLoaded: () {},
-      onAdFailedToLoad: (error) {
-        /* Do something */
-      },
-    );
-    await ad.load(adRequest: const AdRequest());
-    await ad.show();
-    await ad.waitForDismiss();
+  void ontapLanguages() {
+    Navigator.of(context).pushNamed('/languages_page');
+    setState(() {});
   }
 
+  // Future<void> showInterstitialAd() async {
+  //   final ad = await InterstitialAd.create(
+  //     adUnitId: 'R-M-2953427-1',
+  //     onAdLoaded: () {},
+  //     onAdFailedToLoad: (error) {
+  //       /* Do something */
+  //     },
+  //   );
+  //   await ad.load(adRequest: const AdRequest());
+  //   await ad.show();
+  //   await ad.waitForDismiss();
+  // }
+
   void getSnackBar(String text) {
-     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(text),
     ));
   }
 
-  Future<void> showRewardedAd() async {
-    final ad = await RewardedAd.create(
-      adUnitId: 'R-M-2953427-2',
-      onAdLoaded: () {},
-      onAdFailedToLoad: (error) {
-        /* Do something */
-      },
-    );
-    await ad.load(adRequest: const AdRequest());
-    await ad.show();
-    final reward = await ad.waitForDismiss();
-    if (reward != null) {
-      //getSnackBar('Получено!');
-     await dataBase.putSpin();
-     setState(() {
-     });
-    }
-  }
+  // Future<void> showRewardedAd() async {
+  //   final ad = await RewardedAd.create(
+  //     adUnitId: 'R-M-2953427-2',
+  //     onAdLoaded: () {},
+  //     onAdFailedToLoad: (error) {
+  //       /* Do something */
+  //     },
+  //   );
+  //   await ad.load(adRequest: const AdRequest());
+  //   await ad.show();
+  //   final reward = await ad.waitForDismiss();
+  //   if (reward != null) {
+  //     //getSnackBar('Получено!');
+  //    await dataBase.putSpin();
+  //    setState(() {
+  //    });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -199,17 +217,18 @@ class _SettingsPageState extends State<SettingsPage> {
                             focusNode: focusNode,
                             keyboardType: TextInputType.number,
                             controller: textEditingController,
-                            onTapOutside: (event) { 
+                            onTapOutside: (event) {
                               dismissKeyboard();
-                            setState(() {
-                            });},
+                              setState(() {});
+                            },
                             onEditingComplete: () {
                               dismissKeyboard();
                               if (spin > 0) {
                                 requestPermissions();
                                 getSnackBar("Уведомления созданы");
                               } else {
-                                getSnackBar('Уведомления закончились. Получите Free Push');
+                                getSnackBar(
+                                    'Уведомления закончились. Получите Free Push');
                               }
                             },
                             decoration: InputDecoration(
@@ -287,11 +306,11 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ? 0
                                   : 1,
                           activeFgColor: Colors.white,
-                        animate: true,
-                        animationDuration: 300,
+                          animate: true,
+                          animationDuration: 300,
                           inactiveBgColor:
                               Theme.of(context).brightness == Brightness.light
-                                  ? const Color.fromARGB(130, 54, 53, 53)
+                                  ? const Color.fromARGB(130, 57, 56, 56)
                                   : const Color.fromARGB(51, 6, 197, 245),
                           inactiveFgColor: Colors.white,
                           totalSwitches: 2,
@@ -328,6 +347,61 @@ class _SettingsPageState extends State<SettingsPage> {
                       const SizedBox(
                         width: 15,
                       ),
+                      const Text('Ваш язык:',
+                          style: TextStyle(
+                            fontSize: 16,
+                          )),
+                      const Expanded(
+                        child: SizedBox(),
+                      ),
+                      SizedBox(
+                        height: 35,
+                        width: 120,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            ontapLanguages();
+                          },
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Center(
+                              child: FutureBuilder(
+                                  future: getLanguage(),
+                                  builder: (context, AsyncSnapshot snapshot) {
+                                    return Text(
+                                      snapshot.data.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  const Divider(
+                    color: Color.fromARGB(255, 35, 35, 35),
+                    thickness: 1,
+                    indent: 10,
+                    endIndent: 10,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 15,
+                      ),
                       const Text('Доступно уведомлений:',
                           style: TextStyle(
                             fontSize: 16,
@@ -335,13 +409,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       const Expanded(
                         child: SizedBox(),
                       ),
-                      ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          maxHeight: 35,
-                          maxWidth: 60,
-                          minHeight: 35,
-                          minWidth: 60,
-                        ),
+                      SizedBox(
+                        height: 35,
+                        width: 60,
                         child: DecoratedBox(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
@@ -383,7 +453,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           const BoxConstraints(minHeight: 40, minWidth: 120),
                       child: ElevatedButton(
                           onPressed: () {
-                            showRewardedAd();
+                            // showRewardedAd();
                           },
                           style: ButtonStyle(
                               shape: MaterialStateProperty.all(

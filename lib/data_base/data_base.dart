@@ -1,8 +1,40 @@
 import 'package:hive/hive.dart';
+import 'package:push_word/languages.dart';
 
 class DataBase {
   bool isFavorit = false;
   static int count = 0;
+
+  Future<void> initialNativeLanguage() async {
+    var lang = await Hive.openBox<String>('LanguageBox');
+    bool flag = lang.containsKey('language');
+    if (!flag) {
+      lang.put('language', 'af');
+    }
+    // await lang.close();
+  }
+
+  Future<String> getNativeLanguage() async {
+    var lang = await Hive.openBox<String>('LanguageBox');
+    String code = lang.get('language') ?? 'Error';
+    var map = MapLanguages.mapLanguages;
+    String value = map[code] ?? 'Error';
+    //  await lang.close();
+    return value;
+  }
+
+  Future<String> getNativeLanguageCode() async {
+    var lang = await Hive.openBox<String>('LanguageBox');
+    String value = lang.get('language') ?? 'Error';
+    //  await lang.close();
+    return value;
+  }
+
+  Future<void> putNativeLanguage(String language) async {
+    var lang = await Hive.openBox<String>('LanguageBox');
+    lang.put('language', language);
+    // await lang.close();
+  }
 
   Future<void> initialSpin() async {
     var spin = await Hive.openBox<int>('SpinBox');
@@ -10,24 +42,28 @@ class DataBase {
     if (!flag) {
       spin.put('spin', 100);
     }
+    //  await spin.close();
   }
 
   Future<void> putSpin() async {
     var spin = await Hive.openBox<int>('SpinBox');
     int value = spin.get('spin') ?? 0;
     spin.put('spin', value + 30);
+    // await spin.close();
   }
 
   Future<int> getSpin() async {
     var spin = await Hive.openBox<int>('SpinBox');
     int value = spin.get('spin') ?? 0;
+    // await spin.close();
     return value;
   }
 
   Future<void> deleteSpin() async {
     var spin = await Hive.openBox<int>('SpinBox');
     int value = spin.get('spin') ?? 0;
-    spin.put('spin', value -1);
+    spin.put('spin', value - 1);
+    // await spin.close();
   }
 
   Future<void> putFavorite(String key, String value) async {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:push_word/data_base/data_base.dart';
 import 'package:push_word/model/language_choice_model.dart';
 import 'parent_list.dart';
 import '../model/search_textfield_model.dart';
-import 'package:yandex_mobileads/mobile_ads.dart';
+//import 'package:yandex_mobileads/mobile_ads.dart';
 import 'dart:async';
 
 class SearchList extends StatefulWidget implements ParentList {
@@ -30,11 +31,11 @@ class _SearchListState extends State<SearchList> {
 
   @override
   void initState() {
-    textcontroller.addListener((){
- if (_debounce.isActive) _debounce.cancel();
-    {
-      _debounce = Timer(const Duration(milliseconds: 1000), onTapSearch);
-    }
+    textcontroller.addListener(() {
+      if (_debounce.isActive) _debounce.cancel();
+      {
+        _debounce = Timer(const Duration(milliseconds: 1000), onTapSearch);
+      }
     });
     focusNode = FocusNode();
     super.initState();
@@ -51,8 +52,14 @@ class _SearchListState extends State<SearchList> {
     focusNode.unfocus();
   }
 
-  Future<void> onTapSearch() async {
+  Future<void> initLanguage() async {
    
+      Provider.of<LanguageChoiceModelProvider>(context, listen: true)
+          .setLanguage();
+    
+  }
+
+  Future<void> onTapSearch() async {
     String enter = textcontroller.text;
     SearchTextFieldModelProvider.read(context)?.model.key = enter;
     text = await SearchTextFieldModelProvider.read(context)
@@ -118,20 +125,21 @@ class _SearchListState extends State<SearchList> {
     setState(() {});
   }
 
-  final banner = BannerAd(
-    adUnitId: 'R-M-2953427-3',
-    adSize: const AdSize.sticky(width: 400),
-    adRequest: const AdRequest(),
-    onAdLoaded: () {
-      /* Do something */
-    },
-    onAdFailedToLoad: (error) {
-      /* Do something */
-    },
-  );
+  // final banner = BannerAd(
+  //   adUnitId: 'R-M-2953427-3',
+  //   adSize: const AdSize.sticky(width: 400),
+  //   adRequest: const AdRequest(),
+  //   onAdLoaded: () {
+  //     /* Do something */
+  //   },
+  //   onAdFailedToLoad: (error) {
+  //     /* Do something */
+  //   },
+  // );
 
   @override
   Widget build(BuildContext context) {
+    initLanguage();
     String lang =
         Provider.of<LanguageChoiceModelProvider>(context, listen: true)
             .languageChoiceModel
@@ -154,25 +162,18 @@ class _SearchListState extends State<SearchList> {
                 child: ConstrainedBox(
               constraints: const BoxConstraints(maxHeight: 40, maxWidth: 120),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  Provider.of<LanguageChoiceModelProvider>(context,
+                          listen: false)
+                      .replaceLanguage();
+                  setState(() {});
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(child: Center(child: Text(lang))),
-                    Expanded(
-                      child: IconButton(
-                          onPressed: () async {
-                            Provider.of<LanguageChoiceModelProvider>(context,
-                                    listen: false)
-                                .replaceLanguage();
-                            setState(() {});
-                          },
-                          icon: const Icon(
-                            Icons.compare_arrows,
-                          )),
-                    ),
-                    const SizedBox(
-                      width: 15,
+                    const Icon(
+                      Icons.compare_arrows,
                     ),
                     Expanded(child: Center(child: Text(trans))),
                   ],
@@ -207,7 +208,7 @@ class _SearchListState extends State<SearchList> {
                       TextField(
                         controller: textcontroller,
                         onTap: () {
-                         // Future.delayed(const Duration(seconds: 1), () {});
+                          // Future.delayed(const Duration(seconds: 1), () {});
                         },
                         onTapOutside: (event) {
                           dismissKeyboard();
@@ -241,9 +242,9 @@ class _SearchListState extends State<SearchList> {
                 ),
               ),
             ),
-            const SizedBox(height: 50),
-            AdWidget(bannerAd: banner),
-            const SizedBox(height: 10),
+            // const SizedBox(height: 50),
+            // AdWidget(bannerAd: banner),
+            // const SizedBox(height: 10),
           ],
         ),
       ),
