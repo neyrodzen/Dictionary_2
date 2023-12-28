@@ -9,23 +9,23 @@ class DataBase {
     var lang = await Hive.openBox<String>('LanguageBox');
     bool flag = lang.containsKey('language');
     if (!flag) {
-      lang.put('language', 'af');
+      lang.put('language', 'ru');
     }
     // await lang.close();
   }
 
   Future<String> getNativeLanguage() async {
     var lang = await Hive.openBox<String>('LanguageBox');
-    String code = lang.get('language') ?? 'Error';
+    String code = lang.get('language') ?? 'ru';
     var map = MapLanguages.mapLanguages;
-    String value = map[code] ?? 'Error';
+    String value = map[code] ?? 'ru';
     //  await lang.close();
     return value;
   }
 
   Future<String> getNativeLanguageCode() async {
     var lang = await Hive.openBox<String>('LanguageBox');
-    String value = lang.get('language') ?? 'Error';
+    String value = lang.get('language') ?? 'ru';
     //  await lang.close();
     return value;
   }
@@ -45,10 +45,10 @@ class DataBase {
     //  await spin.close();
   }
 
-  Future<void> putSpin() async {
+  Future<void> putSpin(int reward) async {
     var spin = await Hive.openBox<int>('SpinBox');
     int value = spin.get('spin') ?? 0;
-    spin.put('spin', value + 30);
+    spin.put('spin', value + reward);
     // await spin.close();
   }
 

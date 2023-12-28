@@ -6,7 +6,8 @@ import 'package:toggle_switch/toggle_switch.dart';
 import 'package:flutter/material.dart';
 import '../local_notice_service/create_notification.dart';
 import '../model/language_choice_model.dart';
-//import 'package:yandex_mobileads/mobile_ads.dart';
+import 'package:yandex_mobileads/mobile_ads.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -23,15 +24,19 @@ class _SettingsPageState extends State<SettingsPage> {
   NotifiCreate notifiCreate = NotifiCreate();
   late FocusNode focusNode;
   DataBase dataBase = DataBase();
-  late int spin;
+  int spin = 0;
   late String languege;
+  RewardedAd? _ad;
+  late final Future<RewardedAdLoader> _adLoader = _createRewardedAdLoader();
+
   @override
   void initState() {
     super.initState();
+    // showInterstitialAd();
     dataBase.initialSpin();
     dataBase.initialNativeLanguage();
-    // showInterstitialAd();
     focusNode = FocusNode();
+    _loadRewardedAd();
   }
 
   Future<int> getSpin() async {
@@ -45,15 +50,32 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {});
     return lang;
   }
+
   Future<void> initLanguage() async {
-  Provider.of<LanguageChoiceModelProvider>(context, listen: true)
-          .setLanguage();
+    Provider.of<LanguageChoiceModelProvider>(context, listen: true)
+        .setLanguage();
   }
+
   @override
   void dispose() {
     focusNode.dispose();
+    _ad?.destroy();
     super.dispose();
   }
+
+  // Future<void> showInterstitialAd() async {
+  //   final ad = await InterstitialAd.create(
+  //     adUnitId: 'demo-interstitial-yandex',
+  //     onAdLoaded: () {},
+  //     onAdFailedToLoad: (error) {
+  //       /* Do something */
+  //     },
+  //   );
+  //   await ad.load(adRequest: const AdRequest());
+  //   await ad.show();
+  //   await ad.waitForDismiss();
+  //   await ad.destroy();
+  // }
 
   void requestPermissions() async {
     PermissionStatus permissionStatus = await Permission.notification.status;
@@ -96,43 +118,95 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {});
   }
 
-  // Future<void> showInterstitialAd() async {
-  //   final ad = await InterstitialAd.create(
-  //     adUnitId: 'R-M-2953427-1',
-  //     onAdLoaded: () {},
-  //     onAdFailedToLoad: (error) {
-  //       /* Do something */
-  //     },
-  //   );
-  //   await ad.load(adRequest: const AdRequest());
-  //   await ad.show();
-  //   await ad.waitForDismiss();
-  // }
-
   void getSnackBar(String text) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(text),
     ));
   }
 
+  void noConnectionSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('No Connection'),
+    ));
+  }
   // Future<void> showRewardedAd() async {
   //   final ad = await RewardedAd.create(
-  //     adUnitId: 'R-M-2953427-2',
+  //     adUnitId: 'demo-rewarded-yandex',
   //     onAdLoaded: () {},
   //     onAdFailedToLoad: (error) {
   //       /* Do something */
   //     },
   //   );
+
   //   await ad.load(adRequest: const AdRequest());
   //   await ad.show();
   //   final reward = await ad.waitForDismiss();
   //   if (reward != null) {
   //     //getSnackBar('Получено!');
-  //    await dataBase.putSpin();
-  //    setState(() {
-  //    });
+  //     await dataBase.putSpin();
+  //     setState(() {});
+  //     await ad.destroy();
   //   }
   // }
+
+  Future<RewardedAdLoader> _createRewardedAdLoader() {
+    return RewardedAdLoader.create(
+      onAdLoaded: (RewardedAd rewardedAd) {
+        // The ad was loaded successfully. Now you can show loaded ad
+        _ad = rewardedAd;
+      },
+      onAdFailedToLoad: (error) {
+        // Ad failed to load with AdRequestError.
+        // Attempting to load a new ad from the onAdFailedToLoad() method is strongly discouraged.
+      },
+    );
+  }
+
+  Future<void> _loadRewardedAd() async {
+    final adLoader = await _adLoader;
+    await adLoader.loadAd(
+        adRequestConfiguration:
+            const AdRequestConfiguration(adUnitId: 'R-M-3186506-5'));
+  }
+
+//R-M-3186506-2
+//demo-rewarded-yandex
+  Future<void> showRewardedAd() async {
+    bool result = await InternetConnectionChecker().hasConnection;
+    if (result == false) {
+      noConnectionSnackBar();
+    } else {
+      final ad = _ad;
+      if (ad != null) {
+        _setAdEventListener(ad);
+        await ad.show().then((value) {});
+        var reward = await ad.waitForDismiss();
+        if (reward != null) {
+          await dataBase.putSpin(reward.amount);
+          getSnackBar('Получено!');
+        }
+      } else {
+        await dataBase.putSpin(10);
+        getSnackBar('Получено!');
+      }
+    }
+    setState(() {});
+  }
+
+  void _setAdEventListener(RewardedAd ad) {
+    ad.setAdEventListener(
+        eventListener: RewardedAdEventListener(
+            onAdShown: () {},
+            onAdFailedToShow: (AdError error) {},
+            onAdDismissed: () {
+              _ad?.destroy();
+              _ad = null;
+              _loadRewardedAd();
+            },
+            onAdClicked: () {},
+            onAdImpression: (ImpressionData? data) {},
+            onRewarded: (Reward reward) {}));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,26 +242,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   const SizedBox(
                     height: 8,
                   ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        child: SizedBox(
-                          height: 35,
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          ontapQuestions();
-                        },
-                        style: ElevatedButton.styleFrom(
-                            shape: const CircleBorder(),
-                            padding: const EdgeInsets.all(1)),
-                        child: const Icon(
-                          Icons.question_mark,
-                        ),
-                      ),
-                    ],
-                  ),
+                  QuestionButton(ontapQuestions),
                   const Divider(
                     color: Color.fromARGB(255, 35, 35, 35),
                     thickness: 1,
@@ -239,7 +294,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             onChanged: onChange),
                       ),
                       const SizedBox(
-                        width: 60,
+                        width: 70,
                         child: Center(
                           // width: 60,
                           child: Text(
@@ -249,7 +304,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       SizedBox(
                         height: 35,
-                        width: 60,
+                        width: 70,
                         child: ElevatedButton(
                           onPressed: () {
                             dismissKeyboard();
@@ -260,7 +315,17 @@ class _SettingsPageState extends State<SettingsPage> {
                               getSnackBar('Получите Free Push');
                             }
                           },
-                          child: const Text('Ok'),
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                // Change your radius here
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            'Ok',
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -295,7 +360,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       SizedBox(
                         height: 35,
                         child: ToggleSwitch(
-                          customWidths: const [60.0, 60.0],
+                          customWidths: const [70.0, 70.0],
                           cornerRadius: 5.0,
                           activeBgColors: const [
                             [Color.fromARGB(212, 5, 165, 205)],
@@ -356,7 +421,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       SizedBox(
                         height: 35,
-                        width: 120,
+                        width: 140,
                         child: ElevatedButton(
                           onPressed: () {
                             ontapLanguages();
@@ -411,7 +476,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       SizedBox(
                         height: 35,
-                        width: 60,
+                        width: 70,
                         child: DecoratedBox(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
@@ -420,9 +485,11 @@ class _SettingsPageState extends State<SettingsPage> {
                             child: FutureBuilder(
                                 future: getSpin(),
                                 builder: (context, AsyncSnapshot snapshot) {
-                                  spin = snapshot.data;
+                                  if (snapshot.data != null) {
+                                    spin = snapshot.data as int;
+                                  }
                                   return Text(
-                                    snapshot.data.toString(),
+                                    spin.toString(),
                                     style: const TextStyle(
                                       fontSize: 16,
                                     ),
@@ -452,8 +519,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       constraints:
                           const BoxConstraints(minHeight: 40, minWidth: 120),
                       child: ElevatedButton(
-                          onPressed: () {
-                            // showRewardedAd();
+                          onPressed: () async {
+                            //await showRewardedAd();
+                            await dataBase.putSpin(10);
+                            getSnackBar('Получено!');
                           },
                           style: ButtonStyle(
                               shape: MaterialStateProperty.all(
@@ -473,6 +542,36 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class QuestionButton extends StatelessWidget {
+  const QuestionButton(
+    this.func, {
+    super.key,
+  });
+  final VoidCallback func;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+          child: SizedBox(
+            height: 35,
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            //  ontapQuestions();
+          },
+          style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(), padding: const EdgeInsets.all(1)),
+          child: const Icon(
+            Icons.question_mark,
+          ),
+        ),
+      ],
     );
   }
 }

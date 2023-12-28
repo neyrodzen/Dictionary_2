@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:push_word/data_base/data_base.dart';
 import 'package:push_word/model/language_choice_model.dart';
 import 'parent_list.dart';
 import '../model/search_textfield_model.dart';
-//import 'package:yandex_mobileads/mobile_ads.dart';
+import 'package:yandex_mobileads/mobile_ads.dart';
 import 'dart:async';
 
 class SearchList extends StatefulWidget implements ParentList {
@@ -28,6 +27,39 @@ class _SearchListState extends State<SearchList> {
   bool flag = false;
   String text = ' ';
   Timer _debounce = Timer(const Duration(milliseconds: 500), () {});
+  late BannerAd banner;
+  var isBannerAlreadyCreated = false;
+
+  BannerAdSize _getAdSize() {
+    final screenWidth = MediaQuery.of(context).size.width.round();
+    return BannerAdSize.sticky(width: screenWidth - 20);
+  }
+
+  _createBanner() {
+    return BannerAd(
+        adUnitId: 'R-M-3186506-4', // or 'demo-banner-yandex'
+        adSize: _getAdSize(),
+        adRequest: const AdRequest(),
+        onAdLoaded: () {
+        },
+        onAdFailedToLoad: (error) {
+        },
+        onAdClicked: () {
+        },
+        onLeftApplication: () {
+        },
+        onReturnedToApplication: () {
+        },
+        onImpression: (impressionData) {
+        });
+  }
+
+  _loadAd() async {
+    banner = _createBanner();
+    setState(() {
+      isBannerAlreadyCreated = true;
+    });
+  }
 
   @override
   void initState() {
@@ -45,6 +77,7 @@ class _SearchListState extends State<SearchList> {
   void dispose() {
     focusNode.dispose();
     _debounce.cancel();
+    banner.destroy();
     super.dispose();
   }
 
@@ -53,10 +86,8 @@ class _SearchListState extends State<SearchList> {
   }
 
   Future<void> initLanguage() async {
-   
-      Provider.of<LanguageChoiceModelProvider>(context, listen: true)
-          .setLanguage();
-    
+    Provider.of<LanguageChoiceModelProvider>(context, listen: true)
+        .setLanguage();
   }
 
   Future<void> onTapSearch() async {
@@ -92,20 +123,12 @@ class _SearchListState extends State<SearchList> {
           .database
           .putFavorite(textcontroller.text, text);
       if (!context.mounted) return;
-      // await SearchTextFieldModelProvider.read(context)
-      //     ?.model
-      //     .database
-      //     .putLearn(textcontroller.text, text);
     } else {
       await SearchTextFieldModelProvider.read(context)
           ?.model
           .database
           .deleteFavorite(textcontroller.text);
       if (!context.mounted) return;
-      // await SearchTextFieldModelProvider.read(context)
-      //     ?.model
-      //     .database
-      //     .deleteLearn(textcontroller.text);
     }
     if (!context.mounted) return;
     flag = await SearchTextFieldModelProvider.watch(context)
@@ -125,20 +148,12 @@ class _SearchListState extends State<SearchList> {
     setState(() {});
   }
 
-  // final banner = BannerAd(
-  //   adUnitId: 'R-M-2953427-3',
-  //   adSize: const AdSize.sticky(width: 400),
-  //   adRequest: const AdRequest(),
-  //   onAdLoaded: () {
-  //     /* Do something */
-  //   },
-  //   onAdFailedToLoad: (error) {
-  //     /* Do something */
-  //   },
-  // );
-
   @override
   Widget build(BuildContext context) {
+    if (!isBannerAlreadyCreated) {
+      _loadAd();
+    }
+
     initLanguage();
     String lang =
         Provider.of<LanguageChoiceModelProvider>(context, listen: true)
@@ -171,11 +186,15 @@ class _SearchListState extends State<SearchList> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(child: Center(child: Text(lang))),
+                    Expanded(
+                        child:
+                            Center(child: Text(lang == 'zh-cn' ? 'cn' : lang))),
                     const Icon(
                       Icons.compare_arrows,
                     ),
-                    Expanded(child: Center(child: Text(trans))),
+                    Expanded(
+                        child: Center(
+                            child: Text(trans == 'zh-cn' ? 'cn ' : trans))),
                   ],
                 ),
               ),
@@ -207,9 +226,7 @@ class _SearchListState extends State<SearchList> {
                       const SizedBox(height: 20),
                       TextField(
                         controller: textcontroller,
-                        onTap: () {
-                          // Future.delayed(const Duration(seconds: 1), () {});
-                        },
+                        onTap: () {},
                         onTapOutside: (event) {
                           dismissKeyboard();
                           onTapSearch();
@@ -242,9 +259,9 @@ class _SearchListState extends State<SearchList> {
                 ),
               ),
             ),
-            // const SizedBox(height: 50),
-            // AdWidget(bannerAd: banner),
-            // const SizedBox(height: 10),
+            const SizedBox(height: 50),
+            AdWidget(bannerAd: banner),
+            const SizedBox(height: 10),
           ],
         ),
       ),

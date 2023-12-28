@@ -42,7 +42,8 @@ class _HomePageState extends State<HomePage> {
       } else if (index == 2) {
         var listlearn = await LearnList().makeSome();
         listWidget = listlearn;
-      } else if (index == 3) {
+      } 
+      else if (index == 3) {
         listWidget = list as Widget;
       }
       setState(() {});

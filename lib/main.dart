@@ -1,4 +1,3 @@
-
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +20,9 @@ Future<void> main() async {
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
-
   static final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>();
-  static const String name = 'Awesome Notifications - Example App';
+  static const String name = 'English in notifications';
   static const Color mainColor = Colors.deepPurple;
   @override
   State<MyApp> createState() => _MyAppState();
@@ -40,7 +38,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
@@ -75,7 +72,7 @@ class _MyAppState extends State<MyApp> {
           //'/': (context) => HomePage(),
           '/settings_page': (context) => const SettingsPage(),
           '/question_page': (context) => const QuestionPage(),
-          '/languages_page':  (context) => const LanguagesPage(),
+          '/languages_page': (context) => const LanguagesPage(),
         },
         // initialRoute: '/'
       ),
