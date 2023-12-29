@@ -22,7 +22,7 @@ class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
   static final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>();
-  static const String name = 'English in notifications';
+  static const String name = 'English';
   static const Color mainColor = Colors.deepPurple;
   @override
   State<MyApp> createState() => _MyAppState();
